@@ -36,14 +36,19 @@ export class DendreoApi implements ICredentialType {
 			type: 'options',
 			options: [
 				{
-					name: 'Header',
+					name: 'Header Only',
 					value: 'header',
-					description: 'Send API key in Authorization header',
+					description: 'Send API key in Authorization header only',
 				},
 				{
-					name: 'Query Parameter',
+					name: 'Query Parameter Only',
 					value: 'query',
-					description: 'Send API key as query parameter',
+					description: 'Send API key as query parameter only',
+				},
+				{
+					name: 'Both Header and Query',
+					value: 'both',
+					description: 'Send API key in both Authorization header and query parameter',
 				},
 			],
 			default: 'header',
@@ -55,15 +60,17 @@ export class DendreoApi implements ICredentialType {
 		credentials: ICredentialDataDecryptedObject,
 		requestOptions: any,
 	): Promise<any> {
-		const { slug, apiKey, authMode } = credentials;
+		const { apiKey, authMode } = credentials;
 
 		// Always add Accept header
 		requestOptions.headers = requestOptions.headers || {};
 		requestOptions.headers['Accept'] = 'application/json';
 
-		if (authMode === 'header') {
-			requestOptions.headers['Authorization'] = `ApiKey ${apiKey}`;
-		} else {
+		if (authMode === 'header' || authMode === 'both') {
+			requestOptions.headers['Authorization'] = `Token token="${apiKey}"`;
+		}
+		
+		if (authMode === 'query' || authMode === 'both') {
 			requestOptions.qs = requestOptions.qs || {};
 			requestOptions.qs.key = apiKey;
 		}
@@ -76,6 +83,9 @@ export class DendreoApi implements ICredentialType {
 			baseURL: 'https://pro.dendreo.com/{{$credentials.slug}}/api',
 			url: '/entreprises.php',
 			method: 'GET',
+			headers: {
+				'Accept': 'application/json',
+			},
 		},
 	};
 }

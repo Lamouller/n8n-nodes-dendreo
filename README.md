@@ -21,7 +21,7 @@ To use this node, you need to configure the Dendreo API credentials:
 1. **Dendreo Slug**: Your organization slug found in your Dendreo URL (e.g., `your_org` from `https://pro.dendreo.com/your_org/`)
 2. **API Key**: Your Dendreo API key
 3. **Authentication Mode**: Choose between:
-   - **Header** (default): Sends API key in `Authorization: ApiKey <API_KEY>` header
+   - **Header** (default): Sends API key in `Authorization: Token token="<API_KEY>"` header
    - **Query Parameter**: Sends API key as `?key=<API_KEY>` query parameter
 
 ### Getting Your API Key
@@ -33,28 +33,64 @@ To use this node, you need to configure the Dendreo API credentials:
 
 ## Supported Resources
 
-This node supports the following Dendreo resources (read-only):
+This node supports all documented Dendreo API resources from [developers.dendreo.com](https://developers.dendreo.com/):
 
-- **Entreprises** (`entreprises.php`)
-- **Contacts** (`contacts.php`) 
-- **Actions de Formation** (`actions_de_formation.php`)
-- **Sessions Permanentes** (`sessions_permanentes.php`)
+- **Actions de Formation** - Training actions management
+- **Administrateurs** - Administrator accounts
+- **Catégories de Module** - Module categories
+- **Centres de Formation** - Training centers
+- **Checklists** - Checklist management
+- **Checks** - Individual check items
+- **Contacts** - Contact management
+- **Créneaux** - Time slots
+- **Entreprises** - Company management
+- **Étapes** - Process steps
+- **Évaluations** - Evaluations
+- **Exports** - Data exports
+- **Factures** - Invoices
+- **Fichiers** - File management
+- **Financements** - Funding management
+- **Financeurs** - Funding organizations
+- **Formateurs** - Trainers
+- **Inscriptions** - Registrations
+- **Modules/Produits** - Training modules/products
+- **Opportunités** - Business opportunities
+- **Participants** - Training participants
+- **Particuliers** - Individual contacts
+- **Règlements** - Payments
+- **Salles de Formation** - Training rooms
+- **Sessions Permanentes** - Permanent sessions
+- **Sources** - Lead sources
+- **Souhaits** - Participant preferences
+- **Tâches** - Tasks
+- **Types de Produit** - Product types
 
 ## Operations
 
 ### List
-Retrieves all records for the selected resource.
+Retrieves all records for the selected resource (GET).
+
+### Get
+Retrieves a specific record by ID (GET).
+
+### Create
+Creates a new record (POST).
+
+### Update
+Updates an existing record (POST with ID).
+
+### Delete
+Deletes a record (DELETE).
 
 **Additional Fields:**
 - **Include**: Comma-separated list of related resources to include
 - **Updated After**: Only return records updated after this date
 - **Limit**: Maximum number of records to return (1-1000, default: 100)
 - **Page**: Page number for pagination (default: 1)
+- **Search**: Search term for filtering results
+- **Filter**: Additional filters as JSON object
 
-### Get
-Retrieves a specific record by ID (if supported by the endpoint).
-
-**Note**: Not all Dendreo endpoints support getting records by ID. If the get operation fails, use the list operation with appropriate filters instead.
+**Note**: Not all resources support all operations. Refer to the [Dendreo API documentation](https://developers.dendreo.com/) for specific resource capabilities.
 
 ## Example Usage
 
@@ -102,7 +138,7 @@ You can test your Dendreo API connection using cURL:
 # Using header authentication
 curl -i "https://pro.dendreo.com/YOUR_SLUG/api/entreprises.php" \\
   -H "Accept: application/json" \\
-  -H "Authorization: ApiKey YOUR_API_KEY"
+  -H "Authorization: Token token=\"YOUR_API_KEY\""
 
 # Using query parameter authentication  
 curl -i "https://pro.dendreo.com/YOUR_SLUG/api/entreprises.php?key=YOUR_API_KEY" \\
