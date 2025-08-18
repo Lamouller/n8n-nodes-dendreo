@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-dendreo-antislash",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "n8n community node for the Dendreo API",
   "keywords": [
     "n8n-community-node",
@@ -19,7 +19,8 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
-    "dist"
+    "dist",
+    "nodes/*.svg"
   ],
   "scripts": {
     "build": "tsc",
