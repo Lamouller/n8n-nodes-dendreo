@@ -1,0 +1,48 @@
+{
+  "name": "n8n-nodes-dendreo-antislash",
+  "version": "0.1.0",
+  "description": "n8n community node for the Dendreo API",
+  "keywords": [
+    "n8n-community-node",
+    "n8n", 
+    "dendreo"
+  ],
+  "license": "MIT",
+  "homepage": "https://github.com/lamouller/n8n-nodes-dendreo",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lamouller/n8n-nodes-dendreo.git"
+  },
+  "bugs": {
+    "url": "https://github.com/lamouller/n8n-nodes-dendreo/issues"
+  },
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsc",
+    "dev": "tsc --watch",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "dependencies": {
+    "n8n-workflow": "^1.55.0"
+  },
+  "devDependencies": {
+    "n8n-core": "^1.55.0",
+    "typescript": "^5.4.0",
+    "@types/node": "^20.11.0"
+  },
+  "n8n": {
+    "credentials": [
+      "dist/credentials/DendreoApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Dendreo.node.js"
+    ]
+  }
+}
