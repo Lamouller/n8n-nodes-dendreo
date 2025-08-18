@@ -8,13 +8,13 @@
     "dendreo"
   ],
   "license": "MIT",
-  "homepage": "https://github.com/lamouller/n8n-nodes-dendreo",
+  "homepage": "https://github.com/Lamouller/n8n-nodes-dendreo",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lamouller/n8n-nodes-dendreo.git"
+    "url": "git+https://github.com/Lamouller/n8n-nodes-dendreo.git"
   },
   "bugs": {
-    "url": "https://github.com/lamouller/n8n-nodes-dendreo/issues"
+    "url": "https://github.com/Lamouller/n8n-nodes-dendreo/issues"
   },
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

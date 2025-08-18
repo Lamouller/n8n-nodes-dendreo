@@ -138,5 +138,5 @@ npm publish --access public
 
 ## Support
 
-- [Issues](https://github.com/lamouller/n8n-nodes-dendreo/issues)
+- [Issues](https://github.com/Lamouller/n8n-nodes-dendreo/issues)
 - [n8n community forum](https://community.n8n.io)
