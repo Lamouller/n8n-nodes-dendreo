@@ -21,7 +21,7 @@ To use this node, you need to configure the Dendreo API credentials:
 1. **Dendreo Slug**: Your organization slug found in your Dendreo URL (e.g., `your_org` from `https://pro.dendreo.com/your_org/`)
 2. **API Key**: Your Dendreo API key
 3. **Authentication Mode**: Choose between:
-   - **Header** (default): Sends API key in `Authorization: Token token="<API_KEY>"` header
+   - **Header** (default): Sends API key in `Authorization: ApiKey <API_KEY>` header
    - **Query Parameter**: Sends API key as `?key=<API_KEY>` query parameter
 
 ### Getting Your API Key
@@ -102,7 +102,7 @@ You can test your Dendreo API connection using cURL:
 # Using header authentication
 curl -i "https://pro.dendreo.com/YOUR_SLUG/api/entreprises.php" \\
   -H "Accept: application/json" \\
-  -H "Authorization: Token token=\"YOUR_API_KEY\""
+  -H "Authorization: ApiKey YOUR_API_KEY"
 
 # Using query parameter authentication  
 curl -i "https://pro.dendreo.com/YOUR_SLUG/api/entreprises.php?key=YOUR_API_KEY" \\

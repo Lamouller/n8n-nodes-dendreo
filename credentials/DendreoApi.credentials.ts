@@ -62,7 +62,7 @@ export class DendreoApi implements ICredentialType {
 		requestOptions.headers['Accept'] = 'application/json';
 
 		if (authMode === 'header') {
-			requestOptions.headers['Authorization'] = `Token token="${apiKey}"`;
+			requestOptions.headers['Authorization'] = `ApiKey ${apiKey}`;
 		} else {
 			requestOptions.qs = requestOptions.qs || {};
 			requestOptions.qs.key = apiKey;
