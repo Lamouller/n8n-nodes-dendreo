@@ -85,6 +85,11 @@ export class DendreoApi implements ICredentialType {
 			method: 'GET',
 			headers: {
 				'Accept': 'application/json',
+				'Authorization': '={{$credentials.authMode === "header" || $credentials.authMode === "both" ? "Token token=\"" + $credentials.apiKey + "\"" : undefined}}',
+			},
+			qs: {
+				key: '={{$credentials.authMode === "query" || $credentials.authMode === "both" ? $credentials.apiKey : undefined}}',
+				limit: 1,
 			},
 		},
 	};

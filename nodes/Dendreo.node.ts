@@ -11,7 +11,7 @@ export class Dendreo implements INodeType {
 	description: INodeTypeDescription = {
 		displayName: 'Dendreo',
 		name: 'dendreo',
-		icon: 'file:dendreo.svg',
+		icon: 'file:dendreo-new.svg',
 		group: ['transform'],
 		version: 1,
 		subtitle: '={{$parameter["operation"] + ": " + $parameter["resource"]}}',
@@ -38,14 +38,13 @@ export class Dendreo implements INodeType {
 					{ name: 'Administrateurs', value: 'administrateurs' },
 					{ name: 'Catégories de Module', value: 'categories_module' },
 					{ name: 'Centres de Formation', value: 'centres_de_formation' },
-					{ name: 'Checklists', value: 'checklists' },
-					{ name: 'Checks', value: 'checks' },
+					{ name: 'Checklists (⚠️ Requires cible)', value: 'checklists' },
 					{ name: 'Contacts', value: 'contacts' },
 					{ name: 'Créneaux', value: 'creneaux' },
 					{ name: 'Entreprises', value: 'entreprises' },
 					{ name: 'Étapes', value: 'etapes' },
 					{ name: 'Évaluations', value: 'evaluations' },
-					{ name: 'Exports', value: 'exports' },
+					{ name: 'Exports (⚠️ Requires nom_export)', value: 'exports' },
 					{ name: 'Factures', value: 'factures' },
 					{ name: 'Fichiers', value: 'fichiers' },
 					{ name: 'Financements', value: 'financements' },
@@ -60,9 +59,7 @@ export class Dendreo implements INodeType {
 					{ name: 'Salles de Formation', value: 'salles_de_formation' },
 					{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
 					{ name: 'Sources', value: 'sources' },
-					{ name: 'Souhaits', value: 'souhaits' },
-					{ name: 'Tâches', value: 'taches' },
-					{ name: 'Types de Produit', value: 'types_produit' },
+
 				],
 				default: 'entreprises',
 			},
@@ -174,6 +171,46 @@ export class Dendreo implements INodeType {
 						},
 					},
 					{
+						displayName: 'Max Total Records',
+						name: 'maxTotalRecords',
+						type: 'number',
+						default: 1000,
+						description: 'Maximum total number of records to fetch across all pages (prevents infinite loops)',
+						typeOptions: {
+							minValue: 1,
+							maxValue: 10000,
+						},
+					},
+					{
+						displayName: 'Auto Paginate',
+						name: 'autoPaginate',
+						type: 'boolean',
+						default: false,
+						description: 'Automatically fetch all pages until limit is reached',
+					},
+					{
+						displayName: 'Request Delay (ms)',
+						name: 'requestDelay',
+						type: 'number',
+						default: 0,
+						description: 'Delay between API requests in milliseconds (for rate limiting)',
+						typeOptions: {
+							minValue: 0,
+							maxValue: 5000,
+						},
+					},
+					{
+						displayName: 'Retry Attempts',
+						name: 'retryAttempts',
+						type: 'number',
+						default: 0,
+						description: 'Number of retry attempts for failed requests',
+						typeOptions: {
+							minValue: 0,
+							maxValue: 5,
+						},
+					},
+					{
 						displayName: 'Search',
 						name: 'search',
 						type: 'string',
@@ -186,6 +223,34 @@ export class Dendreo implements INodeType {
 						type: 'json',
 						default: '{}',
 						description: 'Additional filters as JSON object',
+					},
+					{
+						displayName: 'Cible (for Checklists)',
+						name: 'cible',
+						type: 'string',
+						default: '',
+						description: 'Required for Checklists resource - specify the target type',
+					},
+					{
+						displayName: 'Nom Export (for Exports)',
+						name: 'nom_export',
+						type: 'string',
+						default: '',
+						description: 'Required for Exports resource - specify the export name slug',
+					},
+					{
+						displayName: 'Date Début (for Exports)',
+						name: 'date_debut',
+						type: 'dateTime',
+						default: '',
+						description: 'Start date for exports (YYYY-MM-DD format)',
+					},
+					{
+						displayName: 'Date Fin (for Exports)',
+						name: 'date_fin',
+						type: 'dateTime',
+						default: '',
+						description: 'End date for exports (YYYY-MM-DD format)',
 					},
 				],
 			},
@@ -203,7 +268,6 @@ export class Dendreo implements INodeType {
 			categories_module: 'categories_module.php',
 			centres_de_formation: 'centres_de_formation.php',
 			checklists: 'checklists.php',
-			checks: 'checks.php',
 			contacts: 'contacts.php',
 			creneaux: 'creneaux.php',
 			entreprises: 'entreprises.php',
@@ -226,8 +290,19 @@ export class Dendreo implements INodeType {
 			sources: 'sources.php',
 			souhaits: 'souhaits.php',
 			taches: 'taches.php',
-			types_produit: 'types_produit.php',
 		};
+
+		// Resources with special requirements
+		const specialRequirements: { [key: string]: string[] } = {
+			checklists: ['cible'], // Requires 'cible' parameter
+			exports: ['nom_export'], // Requires 'nom_export' parameter
+		};
+
+		// Resources that don't support GET operations for listing
+		const noGetSupport = ['checks'];
+
+		// Resources that don't exist or aren't available
+		const unavailableResources = ['types_produit'];
 
 		for (let i = 0; i < items.length; i++) {
 			try {
@@ -237,6 +312,24 @@ export class Dendreo implements INodeType {
 
 				const credentials = await this.getCredentials('dendreoApi');
 				const baseUrl = `https://pro.dendreo.com/${credentials.slug}/api`;
+
+				// Check if resource is unavailable
+				if (unavailableResources.includes(resource)) {
+					throw new NodeOperationError(
+						this.getNode(),
+						`Resource "${resource}" is not available in this Dendreo instance`,
+						{ itemIndex: i }
+					);
+				}
+
+				// Check if resource doesn't support GET operations
+				if (noGetSupport.includes(resource) && (operation === 'list' || operation === 'get')) {
+					throw new NodeOperationError(
+						this.getNode(),
+						`Resource "${resource}" does not support ${operation} operations`,
+						{ itemIndex: i }
+					);
+				}
 
 				const endpoint = resourceEndpoints[resource];
 				if (!endpoint) {
@@ -310,6 +403,20 @@ export class Dendreo implements INodeType {
 					method = 'DELETE';
 				}
 
+				// Check for special requirements
+				if (specialRequirements[resource] && method === 'GET') {
+					const requiredParams = specialRequirements[resource];
+					for (const param of requiredParams) {
+						if (!additionalFields[param]) {
+							throw new NodeOperationError(
+								this.getNode(),
+								`Resource "${resource}" requires the parameter "${param}" in Additional Fields`,
+								{ itemIndex: i }
+							);
+						}
+					}
+				}
+
 				// Add additional fields to query string for GET operations
 				if (method === 'GET') {
 					Object.keys(additionalFields).forEach(key => {
@@ -352,12 +459,29 @@ export class Dendreo implements INodeType {
 					options.body = body;
 				}
 
-				try {
-					const response = await this.helpers.requestWithAuthentication.call(
-						this,
-						'dendreoApi',
-						options,
-					);
+				// Add request delay if specified
+				const requestDelay = additionalFields.requestDelay as number || 0;
+				if (requestDelay > 0 && i > 0) {
+					await new Promise(resolve => setTimeout(resolve, requestDelay));
+				}
+
+				// Retry logic
+				const maxRetries = additionalFields.retryAttempts as number || 0;
+				let lastError;
+				
+				for (let attempt = 0; attempt <= maxRetries; attempt++) {
+					try {
+						if (attempt > 0) {
+							// Wait before retry (exponential backoff)
+							const retryDelay = Math.min(1000 * Math.pow(2, attempt - 1), 10000);
+							await new Promise(resolve => setTimeout(resolve, retryDelay));
+						}
+						
+						const response = await this.helpers.requestWithAuthentication.call(
+							this,
+							'dendreoApi',
+							options,
+						);
 
 					// Handle different response types
 					let responseData;
@@ -369,29 +493,55 @@ export class Dendreo implements INodeType {
 						responseData = [{ result: response }];
 					}
 
+					// Apply client-side limit if specified (since Dendreo API doesn't respect limit parameter)
+					if (operation === 'list' && additionalFields.limit) {
+						const limit = additionalFields.limit as number;
+						if (limit && responseData.length > limit) {
+							responseData = responseData.slice(0, limit);
+						}
+					}
+
 					responseData.forEach((item: any) => {
 						returnData.push({
 							json: item,
 							pairedItem: { item: i },
 						});
 					});
+					
+					// If we reach here, the request was successful, break out of retry loop
+					break;
 
 				} catch (error: any) {
-					// Provide helpful error messages based on the operation
-					let errorMessage = `Dendreo ${resource}/${operation} failed: ${error.message}`;
+					lastError = error;
 					
-					if (error.statusCode === 401) {
+					// Check if this is a retryable error
+					const isRetryable = error.statusCode >= 500 || error.statusCode === 429 || error.code === 'ECONNRESET';
+					
+					if (attempt === maxRetries || !isRetryable) {
+						// This is the last attempt or error is not retryable, throw the error
+						break;
+					}
+					// Otherwise, continue to next retry attempt
+				}
+			}
+			
+			// If we exit the retry loop with an error, handle it
+			if (lastError) {
+					// Provide helpful error messages based on the operation
+					let errorMessage = `Dendreo ${resource}/${operation} failed: ${lastError.message}`;
+					
+					if (lastError.statusCode === 401) {
 						errorMessage = `Authentication failed. Please check your API key and permissions for ${resource}.`;
-					} else if (error.statusCode === 404) {
+					} else if (lastError.statusCode === 404) {
 						if (operation === 'get') {
 							errorMessage = `${resource} with ID ${qs.id} not found.`;
 						} else {
 							errorMessage = `${resource} endpoint not found. This resource may not support ${operation} operations.`;
 						}
-					} else if (error.statusCode === 403) {
+					} else if (lastError.statusCode === 403) {
 						errorMessage = `Permission denied. Please enable read/write permissions for ${resource} in your Dendreo account.`;
-					} else if (error.statusCode === 422) {
-						errorMessage = `Validation error: ${error.message}. Please check your data format.`;
+					} else if (lastError.statusCode === 422) {
+						errorMessage = `Validation error: ${lastError.message}. Please check your data format.`;
 					}
 
 					throw new NodeOperationError(
