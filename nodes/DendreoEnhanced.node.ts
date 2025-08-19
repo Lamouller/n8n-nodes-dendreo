@@ -148,7 +148,7 @@ export class DendreoEnhanced implements INodeType {
 					{ name: 'Participants', value: 'participants' },
 
 									{ name: 'Salles de Formation', value: 'salles_de_formation' },
-				{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
+
 				],
 				default: 'entreprises',
 				description: 'The resource to operate on',
@@ -1358,6 +1358,197 @@ export class DendreoEnhanced implements INodeType {
 				description: 'Module title (intitule)',
 			},
 
+			// ===== COMPANY FIELDS =====
+			{
+				displayName: 'Company Name',
+				name: 'companyName',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['entreprises'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Company name (raison_sociale)',
+			},
+			{
+				displayName: 'SIRET',
+				name: 'companySiret',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['entreprises'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Company SIRET number',
+			},
+			{
+				displayName: 'Address',
+				name: 'companyAddress',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['entreprises'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Company address',
+			},
+			{
+				displayName: 'City',
+				name: 'companyCity',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['entreprises'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Company city',
+			},
+			{
+				displayName: 'Postal Code',
+				name: 'companyPostalCode',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['entreprises'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Company postal code',
+			},
+
+			// ===== MODULE FIELDS =====
+			{
+				displayName: 'Module Title',
+				name: 'moduleTitle',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['modules'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Module title (intitule)',
+			},
+			{
+				displayName: 'Module Description',
+				name: 'moduleDescription',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['modules'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Module description',
+			},
+			{
+				displayName: 'Module Duration (hours)',
+				name: 'moduleDuration',
+				type: 'number',
+				displayOptions: {
+					show: {
+						resource: ['modules'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: 0,
+				description: 'Module duration in hours',
+			},
+
+			// ===== CONTACT FIELDS =====
+			{
+				displayName: 'Company',
+				name: 'contactCompany',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['create', 'update'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a company...',
+						typeOptions: {
+							searchListMethod: 'getCompanies',
+							searchable: true,
+						},
+					},
+				],
+				description: 'Company for the contact',
+			},
+			{
+				displayName: 'Last Name',
+				name: 'contactLastName',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Contact last name (nom)',
+			},
+			{
+				displayName: 'First Name',
+				name: 'contactFirstName',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Contact first name (prenom)',
+			},
+			{
+				displayName: 'Email',
+				name: 'contactEmail',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Contact email address',
+			},
+			{
+				displayName: 'Phone',
+				name: 'contactPhone',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['contacts'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Contact phone number',
+			},
+
 			// ===== TRAINING ACTION FIELDS =====
 			{
 				displayName: 'Training Action Title',
@@ -1578,9 +1769,9 @@ export class DendreoEnhanced implements INodeType {
 				return await getResourceList.call(this, 'laes.php', 'id_lae', 'nom', 'LAE', filter);
 			},
 
-			async getLcfs(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'lcfs.php', 'id_lcf', 'nom', 'LCF', filter);
-			},
+					async getLcfs(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'lcfs.php', 'id_lcf', 'id_lcf', 'LCF', filter);
+		},
 
 			async getSatisfactionSurveys(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'reponses_questionnaire_satisfaction.php', 'id_reponse', 'nom', 'Survey Response', filter);
@@ -1841,6 +2032,44 @@ export class DendreoEnhanced implements INodeType {
 							const email = this.getNodeParameter('participantEmail', i, '') as string;
 							if (email) body.email = email;
 							
+						} else if (resource === 'entreprises') {
+							// Build company data
+							body = {};
+							const companyName = this.getNodeParameter('companyName', i) as string;
+							const siret = this.getNodeParameter('companySiret', i, '') as string;
+							const address = this.getNodeParameter('companyAddress', i, '') as string;
+							const city = this.getNodeParameter('companyCity', i, '') as string;
+							const postalCode = this.getNodeParameter('companyPostalCode', i, '') as string;
+							
+							body.raison_sociale = companyName;
+							if (siret) body.siret = siret;
+							if (address) body.adresse = address;
+							if (city) body.ville = city;
+							if (postalCode) body.code_postal = postalCode;
+						} else if (resource === 'modules') {
+							// Build module data
+							body = {};
+							const title = this.getNodeParameter('moduleTitle', i) as string;
+							const description = this.getNodeParameter('moduleDescription', i, '') as string;
+							const duration = this.getNodeParameter('moduleDuration', i, 0) as number;
+							
+							body.intitule = title;
+							if (description) body.description = description;
+							if (duration > 0) body.duree = duration;
+						} else if (resource === 'contacts') {
+							// Build contact data
+							body = {};
+							const company = this.getNodeParameter('contactCompany', i) as { value: string };
+							const lastName = this.getNodeParameter('contactLastName', i) as string;
+							const firstName = this.getNodeParameter('contactFirstName', i, '') as string;
+							const email = this.getNodeParameter('contactEmail', i, '') as string;
+							const phone = this.getNodeParameter('contactPhone', i, '') as string;
+							
+							body.id_entreprise = company.value;
+							body.nom = lastName;
+							if (firstName) body.prenom = firstName;
+							if (email) body.email = email;
+							if (phone) body.telephone = phone;
 						} else if (resource === 'actions_de_formation') {
 							// Build training action data
 							body = {};
