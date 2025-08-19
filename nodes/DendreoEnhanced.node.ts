@@ -760,6 +760,196 @@ export class DendreoEnhanced implements INodeType {
 				default: 'getMany',
 			},
 
+			// Catalogue Public Sessions Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['catalogue_prochaines_sessions'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Public Sessions',
+						value: 'getMany',
+						description: 'Get multiple public sessions',
+						action: 'Get many public sessions',
+					},
+					{
+						name: 'Get a Public Session',
+						value: 'get',
+						description: 'Get a public session by ID',
+						action: 'Get a public session',
+					},
+					{
+						name: 'Create Public Session',
+						value: 'create',
+						description: 'Create a new public session',
+						action: 'Create a public session',
+					},
+					{
+						name: 'Update Public Session',
+						value: 'update',
+						description: 'Update a public session',
+						action: 'Update a public session',
+					},
+					{
+						name: 'Delete Public Session',
+						value: 'delete',
+						description: 'Delete a public session',
+						action: 'Delete a public session',
+					},
+					{
+						name: 'Search Public Sessions',
+						value: 'search',
+						description: 'Search public sessions',
+						action: 'Search public sessions',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Créneaux Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['creneaux'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Time Slots',
+						value: 'getMany',
+						description: 'Get multiple time slots',
+						action: 'Get many time slots',
+					},
+					{
+						name: 'Get a Time Slot',
+						value: 'get',
+						description: 'Get a time slot by ID',
+						action: 'Get a time slot',
+					},
+					{
+						name: 'Create Time Slot',
+						value: 'create',
+						description: 'Create a new time slot',
+						action: 'Create a time slot',
+					},
+					{
+						name: 'Update Time Slot',
+						value: 'update',
+						description: 'Update a time slot',
+						action: 'Update a time slot',
+					},
+					{
+						name: 'Delete Time Slot',
+						value: 'delete',
+						description: 'Delete a time slot',
+						action: 'Delete a time slot',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Étapes Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['etapes'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Steps',
+						value: 'getMany',
+						description: 'Get multiple steps',
+						action: 'Get many steps',
+					},
+					{
+						name: 'Get a Step',
+						value: 'get',
+						description: 'Get a step by ID',
+						action: 'Get a step',
+					},
+					{
+						name: 'Create Step',
+						value: 'create',
+						description: 'Create a new step',
+						action: 'Create a step',
+					},
+					{
+						name: 'Update Step',
+						value: 'update',
+						description: 'Update a step',
+						action: 'Update a step',
+					},
+					{
+						name: 'Delete Step',
+						value: 'delete',
+						description: 'Delete a step',
+						action: 'Delete a step',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// LCFs Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['lcfs'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many LCFs',
+						value: 'getMany',
+						description: 'Get multiple LCFs',
+						action: 'Get many LCFs',
+					},
+					{
+						name: 'Get a LCF',
+						value: 'get',
+						description: 'Get a LCF by ID',
+						action: 'Get a LCF',
+					},
+					{
+						name: 'Create LCF',
+						value: 'create',
+						description: 'Create a new LCF',
+						action: 'Create a LCF',
+					},
+					{
+						name: 'Update LCF',
+						value: 'update',
+						description: 'Update a LCF',
+						action: 'Update a LCF',
+					},
+					{
+						name: 'Delete LCF',
+						value: 'delete',
+						description: 'Delete a LCF',
+						action: 'Delete a LCF',
+					},
+				],
+				default: 'getMany',
+			},
+
 			// Generic Operations for other resources
 			{
 				displayName: 'Operation',
@@ -768,7 +958,7 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation', 'catalogue_prochaines_sessions', 'creneaux', 'etapes', 'lcfs'],
 					},
 				},
 				options: [
@@ -928,7 +1118,7 @@ export class DendreoEnhanced implements INodeType {
 			// Training Action ID
 			{
 				displayName: 'Training Action',
-				name: 'recordId',
+				name: 'trainingActionId',
 				type: 'resourceLocator',
 				default: { mode: 'list', value: '' },
 				required: true,
@@ -1270,7 +1460,7 @@ export class DendreoEnhanced implements INodeType {
 			// Module ID
 			{
 				displayName: 'Module',
-				name: 'recordId',
+				name: 'moduleId',
 				type: 'resourceLocator',
 				default: { mode: 'list', value: '' },
 				required: true,
@@ -1304,7 +1494,7 @@ export class DendreoEnhanced implements INodeType {
 			// Participant ID
 			{
 				displayName: 'Participant',
-				name: 'recordId',
+				name: 'participantId',
 				type: 'resourceLocator',
 				default: { mode: 'list', value: '' },
 				required: true,
@@ -1382,7 +1572,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['get', 'update', 'delete'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation', 'catalogue_prochaines_sessions', 'creneaux', 'etapes', 'lcfs'],
 					},
 				},
 				default: '',
@@ -1400,7 +1590,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['search'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation', 'catalogue_prochaines_sessions', 'creneaux', 'etapes', 'lcfs'],
 					},
 				},
 				default: '',
@@ -1570,7 +1760,7 @@ export class DendreoEnhanced implements INodeType {
 				displayOptions: {
 					show: {
 						operation: ['search'],
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation', 'catalogue_prochaines_sessions', 'creneaux', 'etapes', 'lcfs'],
 					},
 				},
 				default: '',
@@ -2690,9 +2880,15 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'contacts') {
 							const contactLocator = this.getNodeParameter('contactId', i) as IDataObject;
 							recordId = contactLocator.value as string;
-						} else if (['actions_de_formation', 'sessions_permanentes', 'modules'].includes(resource)) {
-							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
-							recordId = resourceLocator.value as string;
+						} else if (resource === 'actions_de_formation') {
+							const actionLocator = this.getNodeParameter('trainingActionId', i) as IDataObject;
+							recordId = actionLocator.value as string;
+						} else if (resource === 'modules') {
+							const moduleLocator = this.getNodeParameter('moduleId', i) as IDataObject;
+							recordId = moduleLocator.value as string;
+						} else if (resource === 'participants') {
+							const participantLocator = this.getNodeParameter('participantId', i) as IDataObject;
+							recordId = participantLocator.value as string;
 						} else if (resource === 'categories_module') {
 							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
 							recordId = categoryLocator.value as string;
@@ -3050,9 +3246,17 @@ export class DendreoEnhanced implements INodeType {
 									}
 								});
 							}
-						} else if (['actions_de_formation', 'sessions_permanentes', 'modules'].includes(resource)) {
-							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
-							updateId = resourceLocator.value as string;
+						} else if (resource === 'actions_de_formation') {
+							const actionLocator = this.getNodeParameter('trainingActionId', i) as IDataObject;
+							updateId = actionLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'modules') {
+							const moduleLocator = this.getNodeParameter('moduleId', i) as IDataObject;
+							updateId = moduleLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'participants') {
+							const participantLocator = this.getNodeParameter('participantId', i) as IDataObject;
+							updateId = participantLocator.value as string;
 							body = { id: updateId };
 						} else if (resource === 'categories_module') {
 							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
@@ -3152,9 +3356,15 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'contacts') {
 							const contactLocator = this.getNodeParameter('contactId', i) as IDataObject;
 							deleteId = contactLocator.value as string;
-						} else if (['actions_de_formation', 'sessions_permanentes', 'modules'].includes(resource)) {
-							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
-							deleteId = resourceLocator.value as string;
+						} else if (resource === 'actions_de_formation') {
+							const actionLocator = this.getNodeParameter('trainingActionId', i) as IDataObject;
+							deleteId = actionLocator.value as string;
+						} else if (resource === 'modules') {
+							const moduleLocator = this.getNodeParameter('moduleId', i) as IDataObject;
+							deleteId = moduleLocator.value as string;
+						} else if (resource === 'participants') {
+							const participantLocator = this.getNodeParameter('participantId', i) as IDataObject;
+							deleteId = participantLocator.value as string;
 						} else if (resource === 'categories_module') {
 							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
 							deleteId = categoryLocator.value as string;
