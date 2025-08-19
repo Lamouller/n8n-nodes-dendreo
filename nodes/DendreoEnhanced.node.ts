@@ -882,21 +882,7 @@ export class DendreoEnhanced implements INodeType {
 
 
 
-			// ID Field for Get/Update/Delete operations
-			{
-				displayName: 'Company ID',
-				name: 'companyId',
-				type: 'string',
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['entreprises'],
-						operation: ['get', 'update', 'delete'],
-					},
-				},
-				default: '',
-				description: 'The ID of the company',
-			},
+
 			{
 				displayName: 'Contact',
 				name: 'contactId',
@@ -2699,7 +2685,8 @@ export class DendreoEnhanced implements INodeType {
 						let recordId: string;
 						
 						if (resource === 'entreprises') {
-							recordId = this.getNodeParameter('companyId', i) as string;
+							const companyLocator = this.getNodeParameter('companyId', i) as IDataObject;
+							recordId = companyLocator.value as string;
 						} else if (resource === 'contacts') {
 							const contactLocator = this.getNodeParameter('contactId', i) as IDataObject;
 							recordId = contactLocator.value as string;
@@ -3025,7 +3012,8 @@ export class DendreoEnhanced implements INodeType {
 						let updateId: string;
 						
 						if (resource === 'entreprises') {
-							updateId = this.getNodeParameter('companyId', i) as string;
+							const companyLocator = this.getNodeParameter('companyId', i) as IDataObject;
+							updateId = companyLocator.value as string;
 							const companyProperties = this.getNodeParameter('companyProperties', i, {}) as IDataObject;
 							if (companyProperties.property) {
 								body = { id: updateId };
@@ -3159,7 +3147,8 @@ export class DendreoEnhanced implements INodeType {
 						let deleteId: string;
 						
 						if (resource === 'entreprises') {
-							deleteId = this.getNodeParameter('companyId', i) as string;
+							const companyLocator = this.getNodeParameter('companyId', i) as IDataObject;
+							deleteId = companyLocator.value as string;
 						} else if (resource === 'contacts') {
 							const contactLocator = this.getNodeParameter('contactId', i) as IDataObject;
 							deleteId = contactLocator.value as string;
