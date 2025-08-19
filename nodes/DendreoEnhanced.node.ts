@@ -1538,6 +1538,10 @@ export class DendreoEnhanced implements INodeType {
 				return await getResourceList.call(this, 'categories_module.php', 'id_categorie_module', 'intitule', 'Module Category', filter);
 			},
 
+			async getCataloguePublicSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'catalogue_prochaines_sessions.php', 'id_session', 'intitule', 'Public Session', filter);
+			},
+
 			async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'formateurs.php', 'id_formateur', ['nom', 'prenom'], 'Trainer', filter);
 			},
@@ -1560,6 +1564,34 @@ export class DendreoEnhanced implements INodeType {
 
 			async getTimeSlots(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'date', 'Time Slot', filter);
+			},
+
+			async getSteps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'etapes.php', 'id_etape', 'nom', 'Step', filter);
+			},
+
+			async getLaps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'laps.php', 'id_lap', 'nom', 'LAP', filter);
+			},
+
+			async getLafs(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'lafs.php', 'id_laf', 'nom', 'LAF', filter);
+			},
+
+			async getLaes(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'laes.php', 'id_lae', 'nom', 'LAE', filter);
+			},
+
+			async getLcfs(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'lcfs.php', 'id_lcf', 'nom', 'LCF', filter);
+			},
+
+			async getSatisfactionSurveys(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'reponses_questionnaire_satisfaction.php', 'id_reponse', 'nom', 'Survey Response', filter);
+			},
+
+			async getTasks(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'taches.php', 'id_tache', 'nom', 'Task', filter);
 			},
 		},
 	};
