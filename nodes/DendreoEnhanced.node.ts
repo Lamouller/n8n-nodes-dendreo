@@ -132,14 +132,31 @@ export class DendreoEnhanced implements INodeType {
 				type: 'options',
 				noDataExpression: true,
 				options: [
-					{ name: 'Company', value: 'entreprises' },
-					{ name: 'Contact', value: 'contacts' },
-					{ name: 'Training Action', value: 'actions_de_formation' },
-					{ name: 'Session', value: 'sessions_permanentes' },
-					{ name: 'Module/Product', value: 'modules' },
-					{ name: 'Trainer', value: 'formateurs' },
-					{ name: 'Participant', value: 'participants' },
-					{ name: 'Invoice', value: 'factures' },
+					{ name: 'Actions de Formation', value: 'actions_de_formation' },
+					{ name: 'Administrateurs', value: 'administrateurs' },
+					{ name: 'Catégories de Module', value: 'categories_module' },
+					{ name: 'Centres de Formation', value: 'centres_de_formation' },
+					{ name: 'Checklists', value: 'checklists' },
+					{ name: 'Contacts', value: 'contacts' },
+					{ name: 'Créneaux', value: 'creneaux' },
+					{ name: 'Entreprises', value: 'entreprises' },
+					{ name: 'Étapes', value: 'etapes' },
+					{ name: 'Évaluations', value: 'evaluations' },
+					{ name: 'Exports', value: 'exports' },
+					{ name: 'Factures', value: 'factures' },
+					{ name: 'Fichiers', value: 'fichiers' },
+					{ name: 'Financements', value: 'financements' },
+					{ name: 'Financeurs', value: 'financeurs' },
+					{ name: 'Formateurs', value: 'formateurs' },
+					{ name: 'Inscriptions', value: 'inscriptions' },
+					{ name: 'Modules/Produits', value: 'modules' },
+					{ name: 'Opportunités', value: 'opportunites' },
+					{ name: 'Participants', value: 'participants' },
+					{ name: 'Particuliers', value: 'particuliers' },
+					{ name: 'Règlements', value: 'reglements' },
+					{ name: 'Salles de Formation', value: 'salles_de_formation' },
+					{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
+					{ name: 'Sources', value: 'sources' },
 				],
 				default: 'entreprises',
 				description: 'The resource to operate on',
@@ -419,7 +436,7 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
 					},
 				},
 				options: [
@@ -452,6 +469,12 @@ export class DendreoEnhanced implements INodeType {
 						value: 'delete',
 						description: 'Delete a record',
 						action: 'Delete a record',
+					},
+					{
+						name: 'Search',
+						value: 'search',
+						description: 'Search for records',
+						action: 'Search records',
 					},
 				],
 				default: 'getMany',
@@ -770,7 +793,7 @@ export class DendreoEnhanced implements INodeType {
 				description: 'The ID of the record',
 			},
 
-			// Search Term Field
+			// Search Term Field for generic resources
 			{
 				displayName: 'Search Term',
 				name: 'searchTerm',
@@ -779,6 +802,43 @@ export class DendreoEnhanced implements INodeType {
 				displayOptions: {
 					show: {
 						operation: ['search'],
+					},
+					hide: {
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+					},
+				},
+				default: '',
+				description: 'The term to search for',
+			},
+
+			// Generic data field for create/update of other resources
+			{
+				displayName: 'Data (JSON)',
+				name: 'data',
+				type: 'json',
+				default: '{}',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: ['create', 'update'],
+					},
+					hide: {
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+					},
+				},
+				description: 'JSON data for the record',
+			},
+
+			// Search Term Field for specific resources
+			{
+				displayName: 'Search Term',
+				name: 'searchTerm',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						operation: ['search'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
 					},
 				},
 				default: '',
@@ -1300,14 +1360,31 @@ export class DendreoEnhanced implements INodeType {
 
 		// Resource endpoint mapping
 		const resourceEndpoints: { [key: string]: string } = {
-			entreprises: 'entreprises.php',
-			contacts: 'contacts.php',
 			actions_de_formation: 'actions_de_formation.php',
-			sessions_permanentes: 'sessions_permanentes.php',
-			modules: 'modules.php',
-			formateurs: 'formateurs.php',
-			participants: 'participants.php',
+			administrateurs: 'administrateurs.php',
+			categories_module: 'categories_module.php',
+			centres_de_formation: 'centres_de_formation.php',
+			checklists: 'checklists.php',
+			contacts: 'contacts.php',
+			creneaux: 'creneaux.php',
+			entreprises: 'entreprises.php',
+			etapes: 'etapes.php',
+			evaluations: 'evaluations.php',
+			exports: 'exports.php',
 			factures: 'factures.php',
+			fichiers: 'fichiers.php',
+			financements: 'financements.php',
+			financeurs: 'financeurs.php',
+			formateurs: 'formateurs.php',
+			inscriptions: 'inscriptions.php',
+			modules: 'modules.php',
+			opportunites: 'opportunites.php',
+			participants: 'participants.php',
+			particuliers: 'particuliers.php',
+			reglements: 'reglements.php',
+			salles_de_formation: 'salles_de_formation.php',
+			sessions_permanentes: 'sessions_permanentes.php',
+			sources: 'sources.php',
 		};
 
 		for (let i = 0; i < items.length; i++) {
@@ -1534,6 +1611,18 @@ export class DendreoEnhanced implements INodeType {
 							
 							const moduleTitle = this.getNodeParameter('moduleTitle', i) as string;
 							body.intitule = moduleTitle;
+						} else {
+							// Generic resource handling
+							const data = this.getNodeParameter('data', i) as string;
+							try {
+								body = JSON.parse(data);
+							} catch (error) {
+								throw new NodeOperationError(
+									this.getNode(),
+									'Invalid JSON data provided',
+									{ itemIndex: i }
+								);
+							}
 						}
 						break;
 
@@ -1584,8 +1673,19 @@ export class DendreoEnhanced implements INodeType {
 							updateId = resourceLocator.value as string;
 							body = { id: updateId };
 						} else {
+							// Generic resource handling
 							updateId = this.getNodeParameter('recordId', i) as string;
-							body = { id: updateId };
+							const data = this.getNodeParameter('data', i) as string;
+							try {
+								body = JSON.parse(data);
+								(body as IDataObject).id = updateId;
+							} catch (error) {
+								throw new NodeOperationError(
+									this.getNode(),
+									'Invalid JSON data provided',
+									{ itemIndex: i }
+								);
+							}
 						}
 						break;
 
@@ -1602,6 +1702,7 @@ export class DendreoEnhanced implements INodeType {
 							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
 							deleteId = resourceLocator.value as string;
 						} else {
+							// Generic resource handling
 							deleteId = this.getNodeParameter('recordId', i) as string;
 						}
 						
