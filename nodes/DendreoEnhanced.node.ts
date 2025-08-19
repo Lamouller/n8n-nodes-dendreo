@@ -1504,67 +1504,67 @@ export class DendreoEnhanced implements INodeType {
 		],
 	};
 
-	methods = {
+		methods = {
 		listSearch: {
 			async getCompanies(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'entreprises.php', 'id_entreprise', 'raison_sociale', 'Company', filter);
 			},
 
-			async getContacts(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'contacts.php', 'id_contact', ['nom', 'prenom'], 'Contact', filter);
-			},
+		async getContacts(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'contacts.php', 'id_contact', ['nom', 'prenom'], 'Contact', filter);
+		},
 
-			async getTrainingActions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'actions_de_formation.php', 'id_action_de_formation', 'intitule', 'Training Action', filter);
-			},
+		async getTrainingActions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'actions_de_formation.php', 'id_action_de_formation', 'intitule', 'Training Action', filter);
+		},
 
-			async getSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'sessions_permanentes.php', 'id_session_permanente', 'nom', 'Session', filter);
-			},
+		async getSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'sessions_permanentes.php', 'id_session_permanente', 'nom', 'Session', filter);
+		},
 
-			async getModules(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'modules.php', 'id_module', 'intitule', 'Module', filter);
-			},
+		async getModules(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'modules.php', 'id_module', 'intitule', 'Module', filter);
+		},
 
-			async getCategoriesProduit(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'categories_produit.php', 'id_categorie_produit', 'intitule', 'Product Category', filter);
-			},
+		async getCategoriesProduit(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'categories_produit.php', 'id_categorie_produit', 'intitule', 'Product Category', filter);
+		},
 
-			async getCategoriesModule(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'categories_module.php', 'id_categorie_module', 'intitule', 'Module Category', filter);
-			},
+		async getCategoriesModule(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'categories_module.php', 'id_categorie_module', 'intitule', 'Module Category', filter);
+		},
 
-			async getCataloguePublicSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'catalogue_prochaines_sessions.php', 'id_action_de_formation', 'intitule', 'Public Session', filter);
-			},
+		async getCataloguePublicSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'catalogue_prochaines_sessions.php', 'id_action_de_formation', 'intitule', 'Public Session', filter);
+		},
 
-			async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'formateurs.php', 'id_formateur', ['nom', 'prenom'], 'Trainer', filter);
-			},
+		async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'formateurs.php', 'id_formateur', ['nom', 'prenom'], 'Trainer', filter);
+		},
 
-			async getParticipants(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'participants.php', 'id_participant', ['nom', 'prenom'], 'Participant', filter);
-			},
+		async getParticipants(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'participants.php', 'id_participant', ['nom', 'prenom'], 'Participant', filter);
+		},
 
-			async getInvoices(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'factures.php', 'id_facture', 'numero', 'Invoice', filter);
-			},
+		async getInvoices(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'factures.php', 'id_facture', 'numero', 'Invoice', filter);
+		},
 
-			async getTrainingRooms(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'salles_de_formation.php', 'id_salle_de_formation', 'intitule', 'Training Room', filter);
-			},
+		async getTrainingRooms(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'salles_de_formation.php', 'id_salle_de_formation', 'intitule', 'Training Room', filter);
+		},
 
-			async getTrainingCenters(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'centres_de_formation.php', 'id_centre_de_formation', 'raison_sociale', 'Training Center', filter);
-			},
+		async getTrainingCenters(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'centres_de_formation.php', 'id_centre_de_formation', 'raison_sociale', 'Training Center', filter);
+		},
 
-			async getTimeSlots(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'date_debut', 'Time Slot', filter);
-			},
+		async getTimeSlots(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'name', 'Time Slot', filter);
+		},
 
-			async getSteps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'etapes.php', 'id_etape_process', 'intitule', 'Step', filter);
-			},
+		async getSteps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+			return await getResourceList.call(this, 'etapes.php', 'id_etape_process', 'intitule', 'Step', filter);
+		},
 
 			async getLaps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'laps.php', 'id_lap', 'nom', 'LAP', filter);
@@ -1586,7 +1586,9 @@ export class DendreoEnhanced implements INodeType {
 				return await getResourceList.call(this, 'reponses_questionnaire_satisfaction.php', 'id_reponse', 'nom', 'Survey Response', filter);
 			},
 
-			
+			async getSessionsPermanentes(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'sessions_permanentes.php', 'id_session_permanente', 'nom', 'Permanent Session', filter);
+			},
 		},
 	};
 
