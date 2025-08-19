@@ -23,6 +23,9 @@ async function getResourceList(
 	const baseUrl = `https://pro.dendreo.com/${credentials.slug}/api`;
 	
 	try {
+		// Utilise une limite plus faible pour des performances optimales
+		const limit = filter ? 50 : 100; // Limite encore plus réduite si on filtre
+		
 		const options = {
 			method: 'GET' as IHttpRequestMethods,
 			url: `${baseUrl}/${endpoint}`,
@@ -31,7 +34,8 @@ async function getResourceList(
 			},
 			json: true,
 			qs: {
-				limit: 1000,
+				limit: limit,
+				...(filter && { search: filter }), // Utilise la recherche côté serveur si disponible
 			},
 		};
 
@@ -72,15 +76,23 @@ async function getResourceList(
 						name: `${displayName} (ID: ${resource[idField]})`,
 						value: resource[idField],
 					};
-				})
-				.sort((a, b) => a.name.localeCompare(b.name));
+				});
 
-			// Apply search filter if provided
+			// Apply search filter if provided and if not already filtered server-side
 			if (filter) {
 				filteredResources = filteredResources.filter(resource => 
 					resource.name.toLowerCase().includes(filter.toLowerCase())
 				);
 			}
+
+			// Limite les résultats pour éviter le surcharge de l'interface
+			const maxResults = 50;
+			if (filteredResources.length > maxResults) {
+				filteredResources = filteredResources.slice(0, maxResults);
+			}
+
+			// Tri optimisé seulement sur les résultats limités
+			filteredResources.sort((a, b) => a.name.localeCompare(b.name));
 
 			return {
 				results: filteredResources,
@@ -95,14 +107,14 @@ async function getResourceList(
 
 export class DendreoEnhanced implements INodeType {
 	description: INodeTypeDescription = {
-		displayName: 'Dendreo Enhanced',
-		name: 'dendreoEnhanced',
+		displayName: 'Dendreo',
+		name: 'dendreo',
 		icon: 'file:dendreo-new.svg',
 		group: ['transform'],
-		version: 1,
-		description: 'Access the Dendreo API with predefined actions',
+		version: 2,
+		description: 'Interact with Dendreo API - Optimized for performance',
 		defaults: {
-			name: 'Dendreo Enhanced',
+			name: 'Dendreo',
 		},
 		credentials: [
 			{

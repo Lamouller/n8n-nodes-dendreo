@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-dendreo-antislash",
-  "version": "1.6.0",
+  "version": "2.0.0",
   "description": "n8n community node for the Dendreo API",
   "keywords": [
     "n8n-community-node",
@@ -43,7 +43,6 @@
       "dist/credentials/DendreoApi.credentials.js"
     ],
     "nodes": [
-      "dist/nodes/Dendreo.node.js",
       "dist/nodes/DendreoEnhanced.node.js"
     ]
   }
