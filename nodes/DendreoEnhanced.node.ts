@@ -23,8 +23,8 @@ async function getResourceList(
 	const baseUrl = `https://pro.dendreo.com/${credentials.slug}/api`;
 	
 	try {
-		// Utilise une limite plus faible pour des performances optimales
-		const limit = filter ? 50 : 100; // Limite encore plus réduite si on filtre
+		// Utilise une limite plus faible pour des performances optimales  
+		const limit = filter ? 25 : 50; // Limite réduite pour éviter les timeouts
 		
 		const options = {
 			method: 'GET' as IHttpRequestMethods,
@@ -86,7 +86,7 @@ async function getResourceList(
 			}
 
 			// Limite les résultats pour éviter le surcharge de l'interface
-			const maxResults = 50;
+			const maxResults = 25;
 			if (filteredResources.length > maxResults) {
 				filteredResources = filteredResources.slice(0, maxResults);
 			}
@@ -1327,7 +1327,7 @@ export class DendreoEnhanced implements INodeType {
 			},
 
 			async getTrainingActions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'actions_de_formation.php', 'id_action_de_formation', 'nom', 'Training Action', filter);
+				return await getResourceList.call(this, 'actions_de_formation.php', 'id_action_de_formation', 'intitule', 'Training Action', filter);
 			},
 
 			async getSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
@@ -1335,7 +1335,7 @@ export class DendreoEnhanced implements INodeType {
 			},
 
 			async getModules(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'modules.php', 'id_module', 'nom', 'Module', filter);
+				return await getResourceList.call(this, 'modules.php', 'id_module', 'intitule', 'Module', filter);
 			},
 
 			async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
