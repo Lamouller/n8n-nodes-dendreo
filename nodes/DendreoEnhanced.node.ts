@@ -768,7 +768,7 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					hide: {
-						resource: ['contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				options: [
@@ -1382,7 +1382,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['get', 'update', 'delete'],
 					},
 					hide: {
-						resource: ['contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
@@ -1400,7 +1400,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['search'],
 					},
 					hide: {
-						resource: ['contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
@@ -1570,7 +1570,7 @@ export class DendreoEnhanced implements INodeType {
 				displayOptions: {
 					show: {
 						operation: ['search'],
-						resource: ['contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
