@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-dendreo-antislash",
-  "version": "2.2.2",
+  "version": "2.2.3",
   "description": "n8n community node for the Dendreo API",
   "keywords": [
     "n8n-community-node",

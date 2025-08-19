@@ -143,16 +143,12 @@ export class DendreoEnhanced implements INodeType {
 					{ name: 'Étapes', value: 'etapes' },
 					{ name: 'Factures', value: 'factures' },
 					{ name: 'Formateurs', value: 'formateurs' },
-					{ name: 'Inscriptions (LAP)', value: 'laps' },
-					{ name: 'Interventions Formateur (LAF)', value: 'lafs' },
-					{ name: 'Liens ADF-Entreprise (LAE)', value: 'laes' },
 					{ name: 'Liens Créneau-Formateur (LCF)', value: 'lcfs' },
 					{ name: 'Modules/Produits', value: 'modules' },
 					{ name: 'Participants', value: 'participants' },
-					{ name: 'Questionnaires Satisfaction', value: 'reponses_questionnaire_satisfaction' },
-					{ name: 'Salles de Formation', value: 'salles_de_formation' },
-					{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
-					{ name: 'Tâches', value: 'taches' },
+
+									{ name: 'Salles de Formation', value: 'salles_de_formation' },
+				{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
 				],
 				default: 'entreprises',
 				description: 'The resource to operate on',
@@ -1539,7 +1535,7 @@ export class DendreoEnhanced implements INodeType {
 			},
 
 			async getCataloguePublicSessions(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'catalogue_prochaines_sessions.php', 'id_session', 'intitule', 'Public Session', filter);
+				return await getResourceList.call(this, 'catalogue_prochaines_sessions.php', 'id_action_de_formation', 'intitule', 'Public Session', filter);
 			},
 
 			async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
@@ -1559,15 +1555,15 @@ export class DendreoEnhanced implements INodeType {
 			},
 
 			async getTrainingCenters(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'centres_de_formation.php', 'id_centre_de_formation', 'nom', 'Training Center', filter);
+				return await getResourceList.call(this, 'centres_de_formation.php', 'id_centre_de_formation', 'raison_sociale', 'Training Center', filter);
 			},
 
 			async getTimeSlots(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'date', 'Time Slot', filter);
+				return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'date_debut', 'Time Slot', filter);
 			},
 
 			async getSteps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'etapes.php', 'id_etape', 'nom', 'Step', filter);
+				return await getResourceList.call(this, 'etapes.php', 'id_etape_process', 'intitule', 'Step', filter);
 			},
 
 			async getLaps(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
@@ -1590,9 +1586,7 @@ export class DendreoEnhanced implements INodeType {
 				return await getResourceList.call(this, 'reponses_questionnaire_satisfaction.php', 'id_reponse', 'nom', 'Survey Response', filter);
 			},
 
-			async getTasks(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
-				return await getResourceList.call(this, 'taches.php', 'id_tache', 'nom', 'Task', filter);
-			},
+			
 		},
 	};
 
@@ -1624,7 +1618,7 @@ export class DendreoEnhanced implements INodeType {
 			reponses_questionnaire_satisfaction: 'reponses_questionnaire_satisfaction.php',
 			salles_de_formation: 'salles_de_formation.php',
 			sessions_permanentes: 'sessions_permanentes.php',
-			taches: 'taches.php',
+
 		};
 
 		for (let i = 0; i < items.length; i++) {
