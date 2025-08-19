@@ -512,6 +512,254 @@ export class DendreoEnhanced implements INodeType {
 				default: 'getMany',
 			},
 
+			// Factures Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['factures'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Invoices',
+						value: 'getMany',
+						description: 'Get multiple invoices',
+						action: 'Get many invoices',
+					},
+					{
+						name: 'Get an Invoice',
+						value: 'get',
+						description: 'Get an invoice by ID',
+						action: 'Get an invoice',
+					},
+					{
+						name: 'Create Invoice',
+						value: 'create',
+						description: 'Create a new invoice',
+						action: 'Create an invoice',
+					},
+					{
+						name: 'Update Invoice',
+						value: 'update',
+						description: 'Update an invoice',
+						action: 'Update an invoice',
+					},
+					{
+						name: 'Delete Invoice',
+						value: 'delete',
+						description: 'Delete an invoice',
+						action: 'Delete an invoice',
+					},
+					{
+						name: 'Search Invoices',
+						value: 'search',
+						description: 'Search for invoices',
+						action: 'Search invoices',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Formateurs Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['formateurs'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Trainers',
+						value: 'getMany',
+						description: 'Get multiple trainers',
+						action: 'Get many trainers',
+					},
+					{
+						name: 'Get a Trainer',
+						value: 'get',
+						description: 'Get a trainer by ID',
+						action: 'Get a trainer',
+					},
+					{
+						name: 'Create Trainer',
+						value: 'create',
+						description: 'Create a new trainer',
+						action: 'Create a trainer',
+					},
+					{
+						name: 'Update Trainer',
+						value: 'update',
+						description: 'Update a trainer',
+						action: 'Update a trainer',
+					},
+					{
+						name: 'Delete Trainer',
+						value: 'delete',
+						description: 'Delete a trainer',
+						action: 'Delete a trainer',
+					},
+					{
+						name: 'Search Trainers',
+						value: 'search',
+						description: 'Search for trainers',
+						action: 'Search trainers',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Sessions Permanentes Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Permanent Sessions',
+						value: 'getMany',
+						description: 'Get multiple permanent sessions',
+						action: 'Get many permanent sessions',
+					},
+					{
+						name: 'Get a Permanent Session',
+						value: 'get',
+						description: 'Get a permanent session by ID',
+						action: 'Get a permanent session',
+					},
+					{
+						name: 'Create Permanent Session',
+						value: 'create',
+						description: 'Create a new permanent session',
+						action: 'Create a permanent session',
+					},
+					{
+						name: 'Update Permanent Session',
+						value: 'update',
+						description: 'Update a permanent session',
+						action: 'Update a permanent session',
+					},
+					{
+						name: 'Delete Permanent Session',
+						value: 'delete',
+						description: 'Delete a permanent session',
+						action: 'Delete a permanent session',
+					},
+					{
+						name: 'Search Permanent Sessions',
+						value: 'search',
+						description: 'Search for permanent sessions',
+						action: 'Search permanent sessions',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Centres de Formation Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['centres_de_formation'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Training Centers',
+						value: 'getMany',
+						description: 'Get multiple training centers',
+						action: 'Get many training centers',
+					},
+					{
+						name: 'Get a Training Center',
+						value: 'get',
+						description: 'Get a training center by ID',
+						action: 'Get a training center',
+					},
+					{
+						name: 'Create Training Center',
+						value: 'create',
+						description: 'Create a new training center',
+						action: 'Create a training center',
+					},
+					{
+						name: 'Update Training Center',
+						value: 'update',
+						description: 'Update a training center',
+						action: 'Update a training center',
+					},
+					{
+						name: 'Delete Training Center',
+						value: 'delete',
+						description: 'Delete a training center',
+						action: 'Delete a training center',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Salles de Formation Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['salles_de_formation'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Training Rooms',
+						value: 'getMany',
+						description: 'Get multiple training rooms',
+						action: 'Get many training rooms',
+					},
+					{
+						name: 'Get a Training Room',
+						value: 'get',
+						description: 'Get a training room by ID',
+						action: 'Get a training room',
+					},
+					{
+						name: 'Create Training Room',
+						value: 'create',
+						description: 'Create a new training room',
+						action: 'Create a training room',
+					},
+					{
+						name: 'Update Training Room',
+						value: 'update',
+						description: 'Update a training room',
+						action: 'Update a training room',
+					},
+					{
+						name: 'Delete Training Room',
+						value: 'delete',
+						description: 'Delete a training room',
+						action: 'Delete a training room',
+					},
+				],
+				default: 'getMany',
+			},
+
 			// Generic Operations for other resources
 			{
 				displayName: 'Operation',
@@ -520,7 +768,7 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				options: [
@@ -630,6 +878,74 @@ export class DendreoEnhanced implements INodeType {
 					},
 				],
 				description: 'The product category to operate on',
+			},
+
+			// Training Centers ID Field
+			{
+				displayName: 'Training Center',
+				name: 'trainingCenterId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['centres_de_formation'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a training center...',
+						typeOptions: {
+							searchListMethod: 'getTrainingCenters',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 1',
+					},
+				],
+				description: 'The training center to operate on',
+			},
+
+			// Training Rooms ID Field
+			{
+				displayName: 'Training Room',
+				name: 'trainingRoomId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['salles_de_formation'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a training room...',
+						typeOptions: {
+							searchListMethod: 'getTrainingRooms',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 1',
+					},
+				],
+				description: 'The training room to operate on',
 			},
 
 			// ID Field for Get/Update/Delete operations
@@ -938,7 +1254,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['get', 'update', 'delete'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
@@ -956,7 +1272,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['search'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
@@ -1126,7 +1442,7 @@ export class DendreoEnhanced implements INodeType {
 				displayOptions: {
 					show: {
 						operation: ['search'],
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit', 'centres_de_formation', 'salles_de_formation'],
 					},
 				},
 				default: '',
@@ -2216,6 +2532,12 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'categories_produit') {
 							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
 							recordId = categoryLocator.value as string;
+						} else if (resource === 'centres_de_formation') {
+							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							recordId = centerLocator.value as string;
+						} else if (resource === 'salles_de_formation') {
+							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							recordId = roomLocator.value as string;
 						} else {
 							recordId = this.getNodeParameter('recordId', i) as string;
 						}
@@ -2567,6 +2889,25 @@ export class DendreoEnhanced implements INodeType {
 							
 							if (categoryTitle) body.intitule = categoryTitle;
 							if (categoryDescription) body.description = categoryDescription;
+						} else if (resource === 'centres_de_formation') {
+							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							updateId = centerLocator.value as string;
+							body = { id: updateId };
+							
+							// Use specialized fields for training centers
+							const centerName = this.getNodeParameter('centerName', i, '') as string;
+							if (centerName) body.nom = centerName;
+						} else if (resource === 'salles_de_formation') {
+							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							updateId = roomLocator.value as string;
+							body = { id: updateId };
+							
+							// Use specialized fields for training rooms
+							const roomTitle = this.getNodeParameter('roomTitle', i, '') as string;
+							const roomType = this.getNodeParameter('roomType', i, '') as string;
+							
+							if (roomTitle) body.intitule = roomTitle;
+							if (roomType) body.emplacement_type = roomType;
 						} else {
 							// Generic resource handling
 							updateId = this.getNodeParameter('recordId', i) as string;
@@ -2602,6 +2943,12 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'categories_produit') {
 							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
 							deleteId = categoryLocator.value as string;
+						} else if (resource === 'centres_de_formation') {
+							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							deleteId = centerLocator.value as string;
+						} else if (resource === 'salles_de_formation') {
+							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							deleteId = roomLocator.value as string;
 						} else {
 							// Generic resource handling
 							deleteId = this.getNodeParameter('recordId', i) as string;
