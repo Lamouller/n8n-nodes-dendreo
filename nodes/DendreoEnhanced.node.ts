@@ -2519,7 +2519,7 @@ export class DendreoEnhanced implements INodeType {
 		for (let i = 0; i < items.length; i++) {
 			try {
 				const resource = this.getNodeParameter('resource', i) as string;
-				const operation = this.getNodeParameter('operation', i) as string;
+				const operation = this.getNodeParameter('operation', i, 'getMany') as string;
 				const additionalFields = this.getNodeParameter('additionalFields', i, {}) as IDataObject;
 
 				const credentials = await this.getCredentials('dendreoApi');
