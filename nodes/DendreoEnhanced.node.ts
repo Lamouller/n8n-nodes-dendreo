@@ -1530,6 +1530,14 @@ export class DendreoEnhanced implements INodeType {
 				return await getResourceList.call(this, 'modules.php', 'id_module', 'intitule', 'Module', filter);
 			},
 
+			async getCategoriesProduit(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'categories_produit.php', 'id_categorie_produit', 'intitule', 'Product Category', filter);
+			},
+
+			async getCategoriesModule(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'categories_module.php', 'id_categorie_module', 'intitule', 'Module Category', filter);
+			},
+
 			async getTrainers(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'formateurs.php', 'id_formateur', ['nom', 'prenom'], 'Trainer', filter);
 			},
@@ -1540,6 +1548,18 @@ export class DendreoEnhanced implements INodeType {
 
 			async getInvoices(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
 				return await getResourceList.call(this, 'factures.php', 'id_facture', 'numero', 'Invoice', filter);
+			},
+
+			async getTrainingRooms(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'salles_de_formation.php', 'id_salle_de_formation', 'intitule', 'Training Room', filter);
+			},
+
+			async getTrainingCenters(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'centres_de_formation.php', 'id_centre_de_formation', 'nom', 'Training Center', filter);
+			},
+
+			async getTimeSlots(this: ILoadOptionsFunctions, filter?: string): Promise<INodeListSearchResult> {
+				return await getResourceList.call(this, 'creneaux.php', 'id_creneau', 'date', 'Time Slot', filter);
 			},
 		},
 	};
