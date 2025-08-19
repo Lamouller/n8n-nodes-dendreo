@@ -420,6 +420,98 @@ export class DendreoEnhanced implements INodeType {
 				default: 'getMany',
 			},
 
+			// Categories Module Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['categories_module'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Module Categories',
+						value: 'getMany',
+						description: 'Get multiple module categories',
+						action: 'Get many module categories',
+					},
+					{
+						name: 'Get a Module Category',
+						value: 'get',
+						description: 'Get a module category by ID',
+						action: 'Get a module category',
+					},
+					{
+						name: 'Create Module Category',
+						value: 'create',
+						description: 'Create a new module category',
+						action: 'Create a module category',
+					},
+					{
+						name: 'Update Module Category',
+						value: 'update',
+						description: 'Update a module category',
+						action: 'Update a module category',
+					},
+					{
+						name: 'Delete Module Category',
+						value: 'delete',
+						description: 'Delete a module category',
+						action: 'Delete a module category',
+					},
+				],
+				default: 'getMany',
+			},
+
+			// Categories Produit Operations
+			{
+				displayName: 'Operation',
+				name: 'operation',
+				type: 'options',
+				noDataExpression: true,
+				displayOptions: {
+					show: {
+						resource: ['categories_produit'],
+					},
+				},
+				options: [
+					{
+						name: 'Get Many Product Categories',
+						value: 'getMany',
+						description: 'Get multiple product categories',
+						action: 'Get many product categories',
+					},
+					{
+						name: 'Get a Product Category',
+						value: 'get',
+						description: 'Get a product category by ID',
+						action: 'Get a product category',
+					},
+					{
+						name: 'Create Product Category',
+						value: 'create',
+						description: 'Create a new product category',
+						action: 'Create a product category',
+					},
+					{
+						name: 'Update Product Category',
+						value: 'update',
+						description: 'Update a product category',
+						action: 'Update a product category',
+					},
+					{
+						name: 'Delete Product Category',
+						value: 'delete',
+						description: 'Delete a product category',
+						action: 'Delete a product category',
+					},
+				],
+				default: 'getMany',
+			},
+
 			// Generic Operations for other resources
 			{
 				displayName: 'Operation',
@@ -428,7 +520,7 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				displayOptions: {
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
 					},
 				},
 				options: [
@@ -470,6 +562,74 @@ export class DendreoEnhanced implements INodeType {
 					},
 				],
 				default: 'getMany',
+			},
+
+			// Categories Module ID Field
+			{
+				displayName: 'Module Category',
+				name: 'categoryModuleId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['categories_module'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a module category...',
+						typeOptions: {
+							searchListMethod: 'getCategoriesModule',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 14',
+					},
+				],
+				description: 'The module category to operate on',
+			},
+
+			// Categories Produit ID Field
+			{
+				displayName: 'Product Category',
+				name: 'categoryProduitId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['categories_produit'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a product category...',
+						typeOptions: {
+							searchListMethod: 'getCategoriesProduit',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 1',
+					},
+				],
+				description: 'The product category to operate on',
 			},
 
 			// ID Field for Get/Update/Delete operations
@@ -778,7 +938,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['get', 'update', 'delete'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
 					},
 				},
 				default: '',
@@ -796,7 +956,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['search'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
 					},
 				},
 				default: '',
@@ -966,7 +1126,7 @@ export class DendreoEnhanced implements INodeType {
 				displayOptions: {
 					show: {
 						operation: ['search'],
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'categories_module', 'categories_produit'],
 					},
 				},
 				default: '',
@@ -2050,6 +2210,12 @@ export class DendreoEnhanced implements INodeType {
 						} else if (['actions_de_formation', 'sessions_permanentes', 'modules'].includes(resource)) {
 							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
 							recordId = resourceLocator.value as string;
+						} else if (resource === 'categories_module') {
+							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
+							recordId = categoryLocator.value as string;
+						} else if (resource === 'categories_produit') {
+							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
+							recordId = categoryLocator.value as string;
 						} else {
 							recordId = this.getNodeParameter('recordId', i) as string;
 						}
@@ -2377,6 +2543,30 @@ export class DendreoEnhanced implements INodeType {
 							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
 							updateId = resourceLocator.value as string;
 							body = { id: updateId };
+						} else if (resource === 'categories_module') {
+							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
+							updateId = categoryLocator.value as string;
+							body = { id: updateId };
+							
+							// Use specialized fields for categories
+							const categoryTitle = this.getNodeParameter('categoryTitle', i, '') as string;
+							const categoryDescription = this.getNodeParameter('categoryDescription', i, '') as string;
+							const categoryColor = this.getNodeParameter('categoryColor', i, '') as string;
+							
+							if (categoryTitle) body.intitule = categoryTitle;
+							if (categoryDescription) body.description = categoryDescription;
+							if (categoryColor) body.color = categoryColor;
+						} else if (resource === 'categories_produit') {
+							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
+							updateId = categoryLocator.value as string;
+							body = { id: updateId };
+							
+							// Use specialized fields for categories
+							const categoryTitle = this.getNodeParameter('categoryTitle', i, '') as string;
+							const categoryDescription = this.getNodeParameter('categoryDescription', i, '') as string;
+							
+							if (categoryTitle) body.intitule = categoryTitle;
+							if (categoryDescription) body.description = categoryDescription;
 						} else {
 							// Generic resource handling
 							updateId = this.getNodeParameter('recordId', i) as string;
@@ -2406,6 +2596,12 @@ export class DendreoEnhanced implements INodeType {
 						} else if (['actions_de_formation', 'sessions_permanentes', 'modules'].includes(resource)) {
 							const resourceLocator = this.getNodeParameter('recordId', i) as IDataObject;
 							deleteId = resourceLocator.value as string;
+						} else if (resource === 'categories_module') {
+							const categoryLocator = this.getNodeParameter('categoryModuleId', i) as IDataObject;
+							deleteId = categoryLocator.value as string;
+						} else if (resource === 'categories_produit') {
+							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
+							deleteId = categoryLocator.value as string;
 						} else {
 							// Generic resource handling
 							deleteId = this.getNodeParameter('recordId', i) as string;
