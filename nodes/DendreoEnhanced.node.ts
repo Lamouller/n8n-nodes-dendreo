@@ -880,73 +880,7 @@ export class DendreoEnhanced implements INodeType {
 				description: 'The product category to operate on',
 			},
 
-			// Training Centers ID Field
-			{
-				displayName: 'Training Center',
-				name: 'trainingCenterId',
-				type: 'resourceLocator',
-				default: { mode: 'list', value: '' },
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['centres_de_formation'],
-						operation: ['get', 'update', 'delete'],
-					},
-				},
-				modes: [
-					{
-						displayName: 'From List',
-						name: 'list',
-						type: 'list',
-						placeholder: 'Select a training center...',
-						typeOptions: {
-							searchListMethod: 'getTrainingCenters',
-							searchable: true,
-						},
-					},
-					{
-						displayName: 'By ID',
-						name: 'id',
-						type: 'string',
-						placeholder: 'e.g. 1',
-					},
-				],
-				description: 'The training center to operate on',
-			},
 
-			// Training Rooms ID Field
-			{
-				displayName: 'Training Room',
-				name: 'trainingRoomId',
-				type: 'resourceLocator',
-				default: { mode: 'list', value: '' },
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['salles_de_formation'],
-						operation: ['get', 'update', 'delete'],
-					},
-				},
-				modes: [
-					{
-						displayName: 'From List',
-						name: 'list',
-						type: 'list',
-						placeholder: 'Select a training room...',
-						typeOptions: {
-							searchListMethod: 'getTrainingRooms',
-							searchable: true,
-						},
-					},
-					{
-						displayName: 'By ID',
-						name: 'id',
-						type: 'string',
-						placeholder: 'e.g. 1',
-					},
-				],
-				description: 'The training room to operate on',
-			},
 
 			// ID Field for Get/Update/Delete operations
 			{
@@ -2778,12 +2712,33 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'categories_produit') {
 							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
 							recordId = categoryLocator.value as string;
+						} else if (resource === 'factures') {
+							const invoiceLocator = this.getNodeParameter('invoiceId', i) as IDataObject;
+							recordId = invoiceLocator.value as string;
+						} else if (resource === 'formateurs') {
+							const trainerLocator = this.getNodeParameter('trainerId', i) as IDataObject;
+							recordId = trainerLocator.value as string;
+						} else if (resource === 'sessions_permanentes') {
+							const sessionLocator = this.getNodeParameter('permanentSessionId', i) as IDataObject;
+							recordId = sessionLocator.value as string;
 						} else if (resource === 'centres_de_formation') {
-							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							const centerLocator = this.getNodeParameter('centerId', i) as IDataObject;
 							recordId = centerLocator.value as string;
 						} else if (resource === 'salles_de_formation') {
-							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							const roomLocator = this.getNodeParameter('roomId', i) as IDataObject;
 							recordId = roomLocator.value as string;
+						} else if (resource === 'catalogue_prochaines_sessions') {
+							const publicSessionLocator = this.getNodeParameter('publicSessionId', i) as IDataObject;
+							recordId = publicSessionLocator.value as string;
+						} else if (resource === 'creneaux') {
+							const timeSlotLocator = this.getNodeParameter('timeSlotId', i) as IDataObject;
+							recordId = timeSlotLocator.value as string;
+						} else if (resource === 'etapes') {
+							const stepLocator = this.getNodeParameter('stepId', i) as IDataObject;
+							recordId = stepLocator.value as string;
+						} else if (resource === 'lcfs') {
+							const lcfLocator = this.getNodeParameter('lcfId', i) as IDataObject;
+							recordId = lcfLocator.value as string;
 						} else {
 							recordId = this.getNodeParameter('recordId', i) as string;
 						}
@@ -3135,8 +3090,20 @@ export class DendreoEnhanced implements INodeType {
 							
 							if (categoryTitle) body.intitule = categoryTitle;
 							if (categoryDescription) body.description = categoryDescription;
+						} else if (resource === 'factures') {
+							const invoiceLocator = this.getNodeParameter('invoiceId', i) as IDataObject;
+							updateId = invoiceLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'formateurs') {
+							const trainerLocator = this.getNodeParameter('trainerId', i) as IDataObject;
+							updateId = trainerLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'sessions_permanentes') {
+							const sessionLocator = this.getNodeParameter('permanentSessionId', i) as IDataObject;
+							updateId = sessionLocator.value as string;
+							body = { id: updateId };
 						} else if (resource === 'centres_de_formation') {
-							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							const centerLocator = this.getNodeParameter('centerId', i) as IDataObject;
 							updateId = centerLocator.value as string;
 							body = { id: updateId };
 							
@@ -3144,7 +3111,7 @@ export class DendreoEnhanced implements INodeType {
 							const centerName = this.getNodeParameter('centerName', i, '') as string;
 							if (centerName) body.nom = centerName;
 						} else if (resource === 'salles_de_formation') {
-							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							const roomLocator = this.getNodeParameter('roomId', i) as IDataObject;
 							updateId = roomLocator.value as string;
 							body = { id: updateId };
 							
@@ -3154,6 +3121,22 @@ export class DendreoEnhanced implements INodeType {
 							
 							if (roomTitle) body.intitule = roomTitle;
 							if (roomType) body.emplacement_type = roomType;
+						} else if (resource === 'catalogue_prochaines_sessions') {
+							const publicSessionLocator = this.getNodeParameter('publicSessionId', i) as IDataObject;
+							updateId = publicSessionLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'creneaux') {
+							const timeSlotLocator = this.getNodeParameter('timeSlotId', i) as IDataObject;
+							updateId = timeSlotLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'etapes') {
+							const stepLocator = this.getNodeParameter('stepId', i) as IDataObject;
+							updateId = stepLocator.value as string;
+							body = { id: updateId };
+						} else if (resource === 'lcfs') {
+							const lcfLocator = this.getNodeParameter('lcfId', i) as IDataObject;
+							updateId = lcfLocator.value as string;
+							body = { id: updateId };
 						} else {
 							// Generic resource handling
 							updateId = this.getNodeParameter('recordId', i) as string;
@@ -3189,12 +3172,33 @@ export class DendreoEnhanced implements INodeType {
 						} else if (resource === 'categories_produit') {
 							const categoryLocator = this.getNodeParameter('categoryProduitId', i) as IDataObject;
 							deleteId = categoryLocator.value as string;
+						} else if (resource === 'factures') {
+							const invoiceLocator = this.getNodeParameter('invoiceId', i) as IDataObject;
+							deleteId = invoiceLocator.value as string;
+						} else if (resource === 'formateurs') {
+							const trainerLocator = this.getNodeParameter('trainerId', i) as IDataObject;
+							deleteId = trainerLocator.value as string;
+						} else if (resource === 'sessions_permanentes') {
+							const sessionLocator = this.getNodeParameter('permanentSessionId', i) as IDataObject;
+							deleteId = sessionLocator.value as string;
 						} else if (resource === 'centres_de_formation') {
-							const centerLocator = this.getNodeParameter('trainingCenterId', i) as IDataObject;
+							const centerLocator = this.getNodeParameter('centerId', i) as IDataObject;
 							deleteId = centerLocator.value as string;
 						} else if (resource === 'salles_de_formation') {
-							const roomLocator = this.getNodeParameter('trainingRoomId', i) as IDataObject;
+							const roomLocator = this.getNodeParameter('roomId', i) as IDataObject;
 							deleteId = roomLocator.value as string;
+						} else if (resource === 'catalogue_prochaines_sessions') {
+							const publicSessionLocator = this.getNodeParameter('publicSessionId', i) as IDataObject;
+							deleteId = publicSessionLocator.value as string;
+						} else if (resource === 'creneaux') {
+							const timeSlotLocator = this.getNodeParameter('timeSlotId', i) as IDataObject;
+							deleteId = timeSlotLocator.value as string;
+						} else if (resource === 'etapes') {
+							const stepLocator = this.getNodeParameter('stepId', i) as IDataObject;
+							deleteId = stepLocator.value as string;
+						} else if (resource === 'lcfs') {
+							const lcfLocator = this.getNodeParameter('lcfId', i) as IDataObject;
+							deleteId = lcfLocator.value as string;
 						} else {
 							// Generic resource handling
 							deleteId = this.getNodeParameter('recordId', i) as string;
