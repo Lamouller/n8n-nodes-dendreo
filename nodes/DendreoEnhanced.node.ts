@@ -146,7 +146,7 @@ export class DendreoEnhanced implements INodeType {
 					{ name: 'Liens Créneau-Formateur (LCF)', value: 'lcfs' },
 					{ name: 'Modules/Produits', value: 'modules' },
 					{ name: 'Participants', value: 'participants' },
-
+				{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
 									{ name: 'Salles de Formation', value: 'salles_de_formation' },
 
 				],
@@ -1468,6 +1468,101 @@ export class DendreoEnhanced implements INodeType {
 				description: 'Module duration in hours',
 			},
 
+			// ===== PARTICIPANT FIELDS =====
+			{
+				displayName: 'Company',
+				name: 'participantCompany',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a company...',
+						typeOptions: {
+							searchListMethod: 'getCompanies',
+							searchable: true,
+						},
+					},
+				],
+				description: 'Company for the participant',
+			},
+			{
+				displayName: 'Last Name',
+				name: 'participantLastName',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Participant last name (nom)',
+			},
+			{
+				displayName: 'First Name',
+				name: 'participantFirstName',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Participant first name (prenom)',
+			},
+			{
+				displayName: 'Email',
+				name: 'participantEmailAddress',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Participant email address',
+			},
+			{
+				displayName: 'Phone',
+				name: 'participantPhoneNumber',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Participant phone number',
+			},
+			{
+				displayName: 'Date of Birth',
+				name: 'participantBirthDate',
+				type: 'dateTime',
+				displayOptions: {
+					show: {
+						resource: ['participants'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Participant date of birth',
+			},
+
 			// ===== CONTACT FIELDS =====
 			{
 				displayName: 'Company',
@@ -1547,6 +1642,99 @@ export class DendreoEnhanced implements INodeType {
 				},
 				default: '',
 				description: 'Contact phone number',
+			},
+
+			// ===== PERMANENT SESSION FIELDS =====
+			{
+				displayName: 'Module',
+				name: 'sessionModule',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+						operation: ['create', 'update'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a module...',
+						typeOptions: {
+							searchListMethod: 'getModules',
+							searchable: true,
+						},
+					},
+				],
+				description: 'Module for the permanent session',
+			},
+			{
+				displayName: 'Training Room',
+				name: 'sessionRoom',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+						operation: ['create', 'update'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a training room...',
+						typeOptions: {
+							searchListMethod: 'getTrainingRooms',
+							searchable: true,
+						},
+					},
+				],
+				description: 'Training room for the session',
+			},
+			{
+				displayName: 'Session Name',
+				name: 'sessionName',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Name of the permanent session',
+			},
+			{
+				displayName: 'Start Date',
+				name: 'sessionStartDate',
+				type: 'dateTime',
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Start date and time of the session',
+			},
+			{
+				displayName: 'End Date',
+				name: 'sessionEndDate',
+				type: 'dateTime',
+				displayOptions: {
+					show: {
+						resource: ['sessions_permanentes'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'End date and time of the session',
 			},
 
 			// ===== TRAINING ACTION FIELDS =====
@@ -1979,58 +2167,24 @@ export class DendreoEnhanced implements INodeType {
 								});
 							}
 						} else if (resource === 'participants') {
-							// Handle company selection/creation for participants
-							const participantCompanySelection = this.getNodeParameter('participantCompanySelection', i, 'existing') as string;
-							let companyId: string;
-							
-							if (participantCompanySelection === 'new') {
-								// Create new company first
-								const newCompanyName = this.getNodeParameter('newParticipantCompanyName', i) as string;
-								
-								const companyBody: IDataObject = {
-									raison_sociale: newCompanyName,
-								};
-								
-								const companyOptions = {
-									method: 'POST' as IHttpRequestMethods,
-									url: `${baseUrl}/entreprises.php`,
-									headers: { 'Accept': 'application/json' },
-									json: true,
-									body: companyBody,
-								};
-								
-								const requestDelay = additionalFields.requestDelay as number || 0;
-								if (requestDelay > 0) {
-									await new Promise(resolve => setTimeout(resolve, requestDelay));
-								}
-								
-								const newCompany = await this.helpers.requestWithAuthentication.call(
-									this,
-									'dendreoApi',
-									companyOptions,
-								);
-								
-								companyId = newCompany.id_entreprise;
-							} else {
-								// Use existing company
-								const companyResourceLocator = this.getNodeParameter('participantCompany', i) as IDataObject;
-								companyId = companyResourceLocator.value as string;
-							}
-							
 							// Build participant data
 							body = {};
-							
-							// Required fields
+							const company = this.getNodeParameter('participantCompany', i) as { value: string };
 							const lastName = this.getNodeParameter('participantLastName', i) as string;
 							const firstName = this.getNodeParameter('participantFirstName', i) as string;
+							const email = this.getNodeParameter('participantEmailAddress', i, '') as string;
+							const phone = this.getNodeParameter('participantPhoneNumber', i, '') as string;
+							const birthDate = this.getNodeParameter('participantBirthDate', i, '') as string;
 							
-							body.id_entreprise = companyId;
+							body.id_entreprise = company.value;
 							body.nom = lastName;
 							body.prenom = firstName;
-							
-							// Optional fields
-							const email = this.getNodeParameter('participantEmail', i, '') as string;
 							if (email) body.email = email;
+							if (phone) body.telephone = phone;
+							if (birthDate) {
+								const birthDateObj = new Date(birthDate);
+								body.date_naissance = birthDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							}
 							
 						} else if (resource === 'entreprises') {
 							// Build company data
@@ -2056,6 +2210,26 @@ export class DendreoEnhanced implements INodeType {
 							body.intitule = title;
 							if (description) body.description = description;
 							if (duration > 0) body.duree = duration;
+						} else if (resource === 'sessions_permanentes') {
+							// Build permanent session data
+							body = {};
+							const module = this.getNodeParameter('sessionModule', i) as { value: string };
+							const room = this.getNodeParameter('sessionRoom', i) as { value: string };
+							const name = this.getNodeParameter('sessionName', i, '') as string;
+							const startDate = this.getNodeParameter('sessionStartDate', i, '') as string;
+							const endDate = this.getNodeParameter('sessionEndDate', i, '') as string;
+							
+							body.id_module = module.value;
+							body.id_salle_de_formation = room.value;
+							if (name) body.nom = name;
+							if (startDate) {
+								const startDateObj = new Date(startDate);
+								body.date_debut = startDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							}
+							if (endDate) {
+								const endDateObj = new Date(endDate);
+								body.date_fin = endDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							}
 						} else if (resource === 'contacts') {
 							// Build contact data
 							body = {};
