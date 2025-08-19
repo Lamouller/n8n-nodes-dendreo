@@ -807,6 +807,142 @@ export class DendreoEnhanced implements INodeType {
 				description: 'The term to search for',
 			},
 
+			// ===== TRAINING ROOM FIELDS =====
+			{
+				displayName: 'Room Title',
+				name: 'roomTitle',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['salles_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Training room title (intitule)',
+			},
+			{
+				displayName: 'Location Type',
+				name: 'roomLocationType',
+				type: 'options',
+				options: [
+					{ name: 'Internal', value: 'interne' },
+					{ name: 'External', value: 'externe' },
+					{ name: 'Client Site', value: 'client' },
+				],
+				displayOptions: {
+					show: {
+						resource: ['salles_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: 'interne',
+				description: 'Target location (emplacement_cible)',
+			},
+
+			// ===== TRAINING CENTER FIELDS =====
+			{
+				displayName: 'Center Name',
+				name: 'centerName',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['centres_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Training center name',
+			},
+
+			// ===== CATEGORY FIELDS =====
+			{
+				displayName: 'Category Title',
+				name: 'categoryTitle',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['categories_module', 'categories_produit'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Category title (intitule)',
+			},
+			{
+				displayName: 'Category Description',
+				name: 'categoryDescription',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['categories_module', 'categories_produit'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Category description',
+			},
+			{
+				displayName: 'Category Color',
+				name: 'categoryColor',
+				type: 'string',
+				displayOptions: {
+					show: {
+						resource: ['categories_module'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Category color (hex code)',
+			},
+
+			// ===== TIME SLOT FIELDS =====
+			{
+				displayName: 'Date',
+				name: 'slotDate',
+				type: 'dateTime',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['creneaux'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Slot date (YYYY-MM-DD)',
+			},
+			{
+				displayName: 'Start Time',
+				name: 'slotStartTime',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['creneaux'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '09:00',
+				description: 'Start time (HH:MM)',
+			},
+			{
+				displayName: 'End Time',
+				name: 'slotEndTime',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['creneaux'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '17:00',
+				description: 'End time (HH:MM)',
+			},
+
 			// Generic data field for create/update of other resources
 			{
 				displayName: 'Data (JSON)',
@@ -819,7 +955,7 @@ export class DendreoEnhanced implements INodeType {
 						operation: ['create', 'update'],
 					},
 					hide: {
-						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs'],
+						resource: ['entreprises', 'contacts', 'actions_de_formation', 'sessions_permanentes', 'modules', 'participants', 'factures', 'formateurs', 'salles_de_formation', 'centres_de_formation', 'categories_module', 'categories_produit', 'creneaux'],
 					},
 				},
 				description: 'JSON data for the record',
@@ -1226,6 +1362,66 @@ export class DendreoEnhanced implements INodeType {
 				description: 'Module title (intitule)',
 			},
 
+			// ===== TRAINING ACTION FIELDS =====
+			{
+				displayName: 'Training Action Title',
+				name: 'trainingActionTitle',
+				type: 'string',
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['actions_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Training action title (intitule)',
+			},
+			{
+				displayName: 'Training Type',
+				name: 'trainingType',
+				type: 'options',
+				options: [
+					{ name: 'Inter-company', value: 'inter' },
+					{ name: 'Intra-company', value: 'intra' },
+					{ name: 'Non-training', value: 'hors_formation' },
+				],
+				displayOptions: {
+					show: {
+						resource: ['actions_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: 'inter',
+				description: 'Type of training',
+			},
+			{
+				displayName: 'Start Date',
+				name: 'trainingStartDate',
+				type: 'dateTime',
+				displayOptions: {
+					show: {
+						resource: ['actions_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Training start date',
+			},
+			{
+				displayName: 'End Date',
+				name: 'trainingEndDate',
+				type: 'dateTime',
+				displayOptions: {
+					show: {
+						resource: ['actions_de_formation'],
+						operation: ['create', 'update'],
+					},
+				},
+				default: '',
+				description: 'Training end date',
+			},
+
 			{
 				displayName: 'Additional Contact Properties',
 				name: 'contactProperties',
@@ -1597,12 +1793,78 @@ export class DendreoEnhanced implements INodeType {
 							const email = this.getNodeParameter('participantEmail', i, '') as string;
 							if (email) body.email = email;
 							
+						} else if (resource === 'actions_de_formation') {
+							// Build training action data
+							body = {};
+							
+							const title = this.getNodeParameter('trainingActionTitle', i) as string;
+							const type = this.getNodeParameter('trainingType', i) as string;
+							const startDate = this.getNodeParameter('trainingStartDate', i, '') as string;
+							const endDate = this.getNodeParameter('trainingEndDate', i, '') as string;
+							
+							body.intitule = title;
+							body.type = type;
+							
+							if (startDate) {
+								const startDateObj = new Date(startDate);
+								body.date_debut = startDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							}
+							
+							if (endDate) {
+								const endDateObj = new Date(endDate);
+								body.date_fin = endDateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							}
+							
 						} else if (resource === 'modules') {
 							// Build module data
 							body = {};
 							
 							const moduleTitle = this.getNodeParameter('moduleTitle', i) as string;
 							body.intitule = moduleTitle;
+						} else if (resource === 'salles_de_formation') {
+							// Build training room data
+							body = {};
+							
+							const roomTitle = this.getNodeParameter('roomTitle', i) as string;
+							const locationType = this.getNodeParameter('roomLocationType', i) as string;
+							
+							body.intitule = roomTitle;
+							body.emplacement_cible = locationType;
+						} else if (resource === 'centres_de_formation') {
+							// Build training center data
+							body = {};
+							
+							const centerName = this.getNodeParameter('centerName', i) as string;
+							body.nom = centerName;
+						} else if (['categories_module', 'categories_produit'].includes(resource)) {
+							// Build category data
+							body = {};
+							
+							const categoryTitle = this.getNodeParameter('categoryTitle', i) as string;
+							const categoryDescription = this.getNodeParameter('categoryDescription', i, '') as string;
+							
+							body.intitule = categoryTitle;
+							if (categoryDescription) body.description = categoryDescription;
+							
+							if (resource === 'categories_module') {
+								const categoryColor = this.getNodeParameter('categoryColor', i, '') as string;
+								if (categoryColor) body.color = categoryColor;
+							}
+						} else if (resource === 'creneaux') {
+							// Build time slot data
+							body = {};
+							
+							const slotDate = this.getNodeParameter('slotDate', i) as string;
+							const startTime = this.getNodeParameter('slotStartTime', i) as string;
+							const endTime = this.getNodeParameter('slotEndTime', i) as string;
+							
+							// Convert datetime to date format
+							const dateObj = new Date(slotDate);
+							const formattedDate = dateObj.toISOString().split('T')[0]; // YYYY-MM-DD
+							
+							body.date = formattedDate;
+							body.heure_debut = startTime;
+							body.heure_fin = endTime;
 						} else {
 							// Generic resource handling
 							const data = this.getNodeParameter('data', i) as string;
