@@ -1039,10 +1039,80 @@ export class DendreoEnhanced implements INodeType {
 				description: 'The training action to work with',
 			},
 
-			// Session ID
+			// ===== SPECIALIZED RESOURCE LOCATORS =====
+			
+			// Invoice ID (Factures)
 			{
-				displayName: 'Session',
-				name: 'recordId',
+				displayName: 'Invoice',
+				name: 'invoiceId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['factures'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select an invoice...',
+						typeOptions: {
+							searchListMethod: 'getInvoices',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 15662',
+					},
+				],
+				description: 'The invoice to operate on',
+			},
+
+			// Trainer ID (Formateurs)
+			{
+				displayName: 'Trainer',
+				name: 'trainerId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['formateurs'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a trainer...',
+						typeOptions: {
+							searchListMethod: 'getTrainers',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 123',
+					},
+				],
+				description: 'The trainer to operate on',
+			},
+
+			// Permanent Session ID (Sessions Permanentes)
+			{
+				displayName: 'Permanent Session',
+				name: 'permanentSessionId',
 				type: 'resourceLocator',
 				default: { mode: 'list', value: '' },
 				required: true,
@@ -1057,9 +1127,111 @@ export class DendreoEnhanced implements INodeType {
 						displayName: 'From List',
 						name: 'list',
 						type: 'list',
-						placeholder: 'Select a session...',
+						placeholder: 'Select a permanent session...',
 						typeOptions: {
-							searchListMethod: 'getSessions',
+							searchListMethod: 'getSessionsPermanentes',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 456',
+					},
+				],
+				description: 'The permanent session to operate on',
+			},
+
+			// Training Center ID (Centres de Formation)
+			{
+				displayName: 'Training Center',
+				name: 'centerId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['centres_de_formation'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a training center...',
+						typeOptions: {
+							searchListMethod: 'getTrainingCenters',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 1',
+					},
+				],
+				description: 'The training center to operate on',
+			},
+
+			// Training Room ID (Salles de Formation)
+			{
+				displayName: 'Training Room',
+				name: 'roomId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['salles_de_formation'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a training room...',
+						typeOptions: {
+							searchListMethod: 'getTrainingRooms',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 1',
+					},
+				],
+				description: 'The training room to operate on',
+			},
+
+			// Public Catalog Session ID (Catalogue Prochaines Sessions)
+			{
+				displayName: 'Public Session',
+				name: 'publicSessionId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['catalogue_prochaines_sessions'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a public session...',
+						typeOptions: {
+							searchListMethod: 'getCataloguePublicSessions',
 							searchable: true,
 						},
 					},
@@ -1070,7 +1242,109 @@ export class DendreoEnhanced implements INodeType {
 						placeholder: 'e.g. 123',
 					},
 				],
-				description: 'The session to work with',
+				description: 'The public session to operate on',
+			},
+
+			// Time Slot ID (Créneaux)
+			{
+				displayName: 'Time Slot',
+				name: 'timeSlotId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['creneaux'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a time slot...',
+						typeOptions: {
+							searchListMethod: 'getCreneaux',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 456',
+					},
+				],
+				description: 'The time slot to operate on',
+			},
+
+			// Step ID (Étapes)
+			{
+				displayName: 'Step',
+				name: 'stepId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['etapes'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a step...',
+						typeOptions: {
+							searchListMethod: 'getEtapes',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 789',
+					},
+				],
+				description: 'The step to operate on',
+			},
+
+			// LCF ID (Liens Créneau-Formateur)
+			{
+				displayName: 'Trainer-TimeSlot Link',
+				name: 'lcfId',
+				type: 'resourceLocator',
+				default: { mode: 'list', value: '' },
+				required: true,
+				displayOptions: {
+					show: {
+						resource: ['lcfs'],
+						operation: ['get', 'update', 'delete'],
+					},
+				},
+				modes: [
+					{
+						displayName: 'From List',
+						name: 'list',
+						type: 'list',
+						placeholder: 'Select a trainer-timeslot link...',
+						typeOptions: {
+							searchListMethod: 'getLcfs',
+							searchable: true,
+						},
+					},
+					{
+						displayName: 'By ID',
+						name: 'id',
+						type: 'string',
+						placeholder: 'e.g. 321',
+					},
+				],
+				description: 'The trainer-timeslot link to operate on',
 			},
 
 			// Module ID
@@ -1175,73 +1449,7 @@ export class DendreoEnhanced implements INodeType {
 				description: 'The company to work with',
 			},
 
-			// Invoice ID
-			{
-				displayName: 'Invoice',
-				name: 'recordId',
-				type: 'resourceLocator',
-				default: { mode: 'list', value: '' },
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['factures'],
-						operation: ['get', 'update', 'delete'],
-					},
-				},
-				modes: [
-					{
-						displayName: 'From List',
-						name: 'list',
-						type: 'list',
-						placeholder: 'Select an invoice...',
-						typeOptions: {
-							searchListMethod: 'getInvoices',
-							searchable: true,
-						},
-					},
-					{
-						displayName: 'By ID',
-						name: 'id',
-						type: 'string',
-						placeholder: 'e.g. 123',
-					},
-				],
-				description: 'The invoice to work with',
-			},
 
-			// Trainer ID
-			{
-				displayName: 'Trainer',
-				name: 'recordId',
-				type: 'resourceLocator',
-				default: { mode: 'list', value: '' },
-				required: true,
-				displayOptions: {
-					show: {
-						resource: ['formateurs'],
-						operation: ['get', 'update', 'delete'],
-					},
-				},
-				modes: [
-					{
-						displayName: 'From List',
-						name: 'list',
-						type: 'list',
-						placeholder: 'Select a trainer...',
-						typeOptions: {
-							searchListMethod: 'getTrainers',
-							searchable: true,
-						},
-					},
-					{
-						displayName: 'By ID',
-						name: 'id',
-						type: 'string',
-						placeholder: 'e.g. 123',
-					},
-				],
-				description: 'The trainer to work with',
-			},
 
 			// Generic Record ID for other resources
 			{
