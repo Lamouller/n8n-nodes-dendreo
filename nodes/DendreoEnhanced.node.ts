@@ -2323,6 +2323,9 @@ export class DendreoEnhanced implements INodeType {
 					show: {
 						operation: ['getMany', 'search', 'getRecentlyUpdated'],
 					},
+					hide: {
+						resource: ['factures', 'formateurs', 'sessions_permanentes', 'centres_de_formation', 'salles_de_formation'],
+					},
 				},
 				options: [
 					{
@@ -2353,6 +2356,41 @@ export class DendreoEnhanced implements INodeType {
 							minValue: 0,
 							maxValue: 5000,
 						},
+					},
+				],
+			},
+
+			// Additional Fields for Specialized Resources
+			{
+				displayName: 'Additional Fields',
+				name: 'additionalFields',
+				type: 'collection',
+				placeholder: 'Add Field',
+				default: {},
+				displayOptions: {
+					show: {
+						operation: ['getMany', 'search'],
+						resource: ['factures', 'formateurs', 'sessions_permanentes', 'centres_de_formation', 'salles_de_formation'],
+					},
+				},
+				options: [
+					{
+						displayName: 'Limit',
+						name: 'limit',
+						type: 'number',
+						typeOptions: {
+							minValue: 1,
+							maxValue: 100,
+						},
+						default: 20,
+						description: 'Max number of results to return',
+					},
+					{
+						displayName: 'Include',
+						name: 'include',
+						type: 'string',
+						default: '',
+						description: 'Additional fields to include in the response',
 					},
 				],
 			},
