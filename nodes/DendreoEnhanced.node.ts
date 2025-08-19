@@ -133,30 +133,26 @@ export class DendreoEnhanced implements INodeType {
 				noDataExpression: true,
 				options: [
 					{ name: 'Actions de Formation', value: 'actions_de_formation' },
-					{ name: 'Administrateurs', value: 'administrateurs' },
 					{ name: 'Catégories de Module', value: 'categories_module' },
+					{ name: 'Catégories de Produit', value: 'categories_produit' },
+					{ name: 'Catalogue Public (Sessions)', value: 'catalogue_prochaines_sessions' },
 					{ name: 'Centres de Formation', value: 'centres_de_formation' },
-					{ name: 'Checklists', value: 'checklists' },
 					{ name: 'Contacts', value: 'contacts' },
 					{ name: 'Créneaux', value: 'creneaux' },
 					{ name: 'Entreprises', value: 'entreprises' },
 					{ name: 'Étapes', value: 'etapes' },
-					{ name: 'Évaluations', value: 'evaluations' },
-					{ name: 'Exports', value: 'exports' },
 					{ name: 'Factures', value: 'factures' },
-					{ name: 'Fichiers', value: 'fichiers' },
-					{ name: 'Financements', value: 'financements' },
-					{ name: 'Financeurs', value: 'financeurs' },
 					{ name: 'Formateurs', value: 'formateurs' },
-					{ name: 'Inscriptions', value: 'inscriptions' },
+					{ name: 'Inscriptions (LAP)', value: 'laps' },
+					{ name: 'Interventions Formateur (LAF)', value: 'lafs' },
+					{ name: 'Liens ADF-Entreprise (LAE)', value: 'laes' },
+					{ name: 'Liens Créneau-Formateur (LCF)', value: 'lcfs' },
 					{ name: 'Modules/Produits', value: 'modules' },
-					{ name: 'Opportunités', value: 'opportunites' },
 					{ name: 'Participants', value: 'participants' },
-					{ name: 'Particuliers', value: 'particuliers' },
-					{ name: 'Règlements', value: 'reglements' },
+					{ name: 'Questionnaires Satisfaction', value: 'reponses_questionnaire_satisfaction' },
 					{ name: 'Salles de Formation', value: 'salles_de_formation' },
 					{ name: 'Sessions Permanentes', value: 'sessions_permanentes' },
-					{ name: 'Sources', value: 'sources' },
+					{ name: 'Tâches', value: 'taches' },
 				],
 				default: 'entreprises',
 				description: 'The resource to operate on',
@@ -1358,33 +1354,29 @@ export class DendreoEnhanced implements INodeType {
 		const items = this.getInputData();
 		const returnData: INodeExecutionData[] = [];
 
-		// Resource endpoint mapping
+		// Resource endpoint mapping (based on official OpenAPI spec)
 		const resourceEndpoints: { [key: string]: string } = {
 			actions_de_formation: 'actions_de_formation.php',
-			administrateurs: 'administrateurs.php',
 			categories_module: 'categories_module.php',
+			categories_produit: 'categories_produit.php',
+			catalogue_prochaines_sessions: 'catalogue_prochaines_sessions.php',
 			centres_de_formation: 'centres_de_formation.php',
-			checklists: 'checklists.php',
 			contacts: 'contacts.php',
 			creneaux: 'creneaux.php',
 			entreprises: 'entreprises.php',
 			etapes: 'etapes.php',
-			evaluations: 'evaluations.php',
-			exports: 'exports.php',
 			factures: 'factures.php',
-			fichiers: 'fichiers.php',
-			financements: 'financements.php',
-			financeurs: 'financeurs.php',
 			formateurs: 'formateurs.php',
-			inscriptions: 'inscriptions.php',
+			laps: 'laps.php', // Inscriptions
+			lafs: 'lafs.php', // Interventions Formateur
+			laes: 'laes.php', // Liens ADF-Entreprise
+			lcfs: 'lcfs.php', // Liens Créneau-Formateur
 			modules: 'modules.php',
-			opportunites: 'opportunites.php',
 			participants: 'participants.php',
-			particuliers: 'particuliers.php',
-			reglements: 'reglements.php',
+			reponses_questionnaire_satisfaction: 'reponses_questionnaire_satisfaction.php',
 			salles_de_formation: 'salles_de_formation.php',
 			sessions_permanentes: 'sessions_permanentes.php',
-			sources: 'sources.php',
+			taches: 'taches.php',
 		};
 
 		for (let i = 0; i < items.length; i++) {
